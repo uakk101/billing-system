@@ -112,15 +112,20 @@ const CreateBillPopup = ({ onClose, locationID }) => {
                                         <GrClose className='text-indigo-500 ' />
                                     </button>
                                 </div>
+
+                                <div  className='rtl-container'>
                                 <div className="grid grid-cols-12 gap-4 px-4 py-4">
                                     
                                     <div className="col-span-12 md:col-span-2">
-                                        <CustomInput name={"name"} value={locationModel.name} onChange={onhandleChange} label="Name" type="text" placeholder="Name" required={true} />
+                                        <CustomInput name={"name"} value={locationModel.name} onChange={onhandleChange} label="کمپنی کا نام" type="text" placeholder="کمپنی کا نام" required={true} />
                                         {validationModel.nameError}
                                     </div>
                                  
-                                   
                                 </div>
+                                </div>
+
+
+
                                 <div className="flex justify-end px-4 py-4 border-t-2">
                                     <CustomButton onClick={onAddBill} text={locationID ? "Update" : "Save"} />
                                     <button onClick={onClose} className="p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2"> Cancel</button>
