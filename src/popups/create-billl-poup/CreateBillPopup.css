@@ -1,0 +1,49 @@
+/* Billing.css */
+.rtl-container {
+    direction: rtl;
+  }
+  
+  /* Add more styles as needed */
+  /* // Add the following styles to your existing CSS file or in the <style> tag */
+
+  .rtl-container span,
+  .rtl-container h1 {
+    font-size: 14px;
+  }
+  
+  .rtl-container .m-2 {
+    margin: 2px;
+  }
+  
+  .rtl-container .p-2 {
+    padding: 2px;
+  }
+  
+  .rtl-container .w-400{
+    width: 180px; /* Adjust the size as needed */
+  }
+  
+  .rtl-container .w-80 {
+    width: 40px; /* Adjust the size as needed */
+  }
+  
+  .rtl-container .grid-cols-5 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  
+  /* // Add a media query for responsiveness */
+  @media screen and (max-width: 768px) {
+    .rtl-container span,
+    .rtl-container h1 {
+      font-size: 12px;
+    }
+  
+    .rtl-container .w-400 {
+      width: 150px; /* Adjust the size as needed */
+    }
+  
+    .rtl-container .w-80 {
+      width: 30px; /* Adjust the size as needed */
+    }
+  }
+    
