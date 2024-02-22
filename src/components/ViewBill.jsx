@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BiSearch } from "react-icons/bi";
+import { ViewBillGrid } from './ViewBillGrid';
 export const ViewBill = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -30,6 +31,8 @@ export const ViewBill = () => {
                     </div>
                 </div>
             </div>
+
+            <ViewBillGrid />
 
         </div >
     )
