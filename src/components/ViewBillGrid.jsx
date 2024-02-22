@@ -102,7 +102,7 @@ export const ViewBillGrid = () => {
     };
 
     return (
-        <div className='border border-gray-400 rounded-md shadow-md p-2 mx-8 overflow-x-auto'>
+        <div className='border border-gray-400 rounded-md shadow-md p-2 mx-8 '>
             <div className='flex justify-between items-center '>
                 <span className='text-[#0C7F80] p-2 font-semibold'>Bills</span>
                 {activeAccordion === true ? (
@@ -117,36 +117,40 @@ export const ViewBillGrid = () => {
                     />
                 )}
             </div>
-            {activeAccordion && (
-                <table className='w-full text-sm mb-4'>
-                    <thead className='bg-[#F5F5F5]'>
-                        <tr className=''>
-                            {columns.map((column) => (
-                                <th
-                                    key={column.name}
-                                    className='h-10 px-6 text-sm font-semibold text-left text-secondary whitespace-nowrap'
-                                >
-                                    {column.name}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody className='border mt-4'>
-                        {staticData.map((data, index) => (
-                            <tr key={data.id} className={`h-10 ${index === staticData.length - 1 ? 'font-semibold' : ''} `}>
+            <div className='overflow-x-auto'>
+
+
+                {activeAccordion && (
+                    <table className='w-full text-sm mb-4 '>
+                        <thead className='bg-[#F5F5F5]'>
+                            <tr className=''>
                                 {columns.map((column) => (
-                                    <td
+                                    <th
                                         key={column.name}
-                                        className={`${index === staticData.length - 1 ? 'border-t' : ''} px-6 text-sm text-left text-secondary border-r whitespace-nowrap`}
+                                        className='h-10 px-6 text-sm font-semibold text-left text-secondary whitespace-nowrap'
                                     >
-                                        {data[column.name]}
-                                    </td>
+                                        {column.name}
+                                    </th>
                                 ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+                        </thead>
+                        <tbody className='border mt-4'>
+                            {staticData.map((data, index) => (
+                                <tr key={data.id} className={`h-10 ${index === staticData.length - 1 ? 'font-semibold' : ''} `}>
+                                    {columns.map((column) => (
+                                        <td
+                                            key={column.name}
+                                            className={`${index === staticData.length - 1 ? 'border-t' : ''} px-6 text-sm text-left text-secondary border-r whitespace-nowrap`}
+                                        >
+                                            {data[column.name]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
         </div>
     );
 };
