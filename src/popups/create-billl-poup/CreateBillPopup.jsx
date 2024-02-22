@@ -6,14 +6,24 @@ import { toast } from 'react-toastify'
 import Validator, { ValidationTypes as V_Type, } from 'react-form-supervalidator';
 import { ErrorHandlingMessage } from '../../Utils/ErrorHandlingMessage'
 
+
 const CreateBillPopup = ({ onClose, locationID }) => {
     const [locationModel, setLocationModel] = useState({
         id: 0,
-        name: "",
-        practiceId: ""
-    })
-    const [loading, setLoading] = useState(false)
+        companyName: "",
+        date : "",
+        mughalGarderQ : "",
+        mughalGarderP : "",
+        mughalGarderT : "",
 
+        crossPipeQ : "",
+        crosspipeP : "",
+        crossPipeT : ""
+      
+    })
+
+
+    const [loading, setLoading] = useState(false)
 
     const onhandleChange = (e) => {
         const { name, value } = e.target;
@@ -26,34 +36,28 @@ const CreateBillPopup = ({ onClose, locationID }) => {
 
     // Validation Types
     const [validationModel, setValidationModel] = useState({
-        nameError: null,
-         
+        companyNameError: null,
+        dateError: null,
+        mughalGarderPError: null,
+        mughalGarderQError: null,
 
     })
- 
+
 
     const setValidation = () => {
         let validation_Obj = {
             ...validationModel,
-            nameError: Validator(locationModel.name, [V_Type.required], ['name is required'],),
-            
+            companyNameError: Validator(locationModel.companyName, [V_Type.required], ['Company Name is required'],),
+            dateError: Validator(locationModel.date, [V_Type.required], ['Date is required'],),
+            mughalGarderPError: Validator(locationModel.mughalGarderP, [V_Type.required], ['it is required'],),
+            mughalGarderQError: Validator(locationModel.mughalGarderQ, [V_Type.required], ['it is required'],),
+
         }
         setValidationModel(validation_Obj)
         return Validator(validation_Obj, V_Type.NullCheck);
     }
 
-
-   
-
-    //*************************  SUPERSEARCH FUNCTIONS ************************* */
-    const handleSelectedData = (selectedObj) => {
-        if (selectedObj) {
-            setLocationModel((prev) => ({ ...prev, taxonomyCode: selectedObj.nuccCode }))
-        } else {
-            setLocationModel((prev) => ({ ...prev, taxonomyCode: "" }))
-        }
-    }
-
+    
     const onAddBill = async () => {
         let my_validation = setValidation();
         if (my_validation) {
@@ -69,11 +73,11 @@ const CreateBillPopup = ({ onClose, locationID }) => {
                     inActiveReason: "",
                     inActiveBy: "",
                     inActiveDate: "",
-                
+
                 }
                 setLoading(true)
                 setLoading(false)
-                 toast.success("")
+                toast.success("")
                 onClose()
                 setLoading(false)
             } catch (error) {
@@ -88,7 +92,7 @@ const CreateBillPopup = ({ onClose, locationID }) => {
             (async () => {
                 setLoading(true)
                 try {
-                     
+
                     setLoading(false)
                 } catch (error) {
                     ErrorHandlingMessage(error)
@@ -96,9 +100,9 @@ const CreateBillPopup = ({ onClose, locationID }) => {
             })();
         }
     }, [locationID])
- 
-  return (
-    <div>
+
+    return (
+        <div>
             {/* {loading && <FullPageLoader allowFullScreen={true} />} */}
             <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                 <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
@@ -112,20 +116,72 @@ const CreateBillPopup = ({ onClose, locationID }) => {
                                         <GrClose className='text-indigo-500 ' />
                                     </button>
                                 </div>
-
-                                <div  className='rtl-container'>
+                                {/* 
+                                <div  className='rtl-container'> */}
                                 <div className="grid grid-cols-12 gap-4 px-4 py-4">
-                                    
-                                    <div className="col-span-12 md:col-span-2">
-                                        <CustomInput name={"name"} value={locationModel.name} onChange={onhandleChange} label="کمپنی کا نام" type="text" placeholder="کمپنی کا نام" required={true} />
+
+                                    <div className="col-span-12 md:col-span-6">
+                                        <CustomInput name={"companyName"} value={locationModel.companyName} onChange={onhandleChange} label="Company Name" type="text" placeholder="کمپنی کا نام" required={true} />
                                         {validationModel.nameError}
                                     </div>
-                                 
+                                    <div className="col-span-12 md:col-span-6">
+                                        <CustomInput name={"date"} value={locationModel.date} onChange={onhandleChange} label="Date" type="date" required={true} />
+                                        {validationModel.nameError}
+                                    </div>
+
+
+                                    {/*  */}
+                                    <div className="col-span-12 md:col-span-2">
+                                        <h1 className='mt-2 text-center'>Mughal Garder</h1>
+                                        {validationModel.nameError}
+                                    </div>
+                                    <div className="col-span-12 md:col-span-4">
+                                        <CustomInput name={"mughalGarderQ"} value={locationModel.mughalGarderQ} onChange={onhandleChange} type="number" required={true} />
+                                        {validationModel.nameError}
+                                    </div>
+                                    <div className="col-span-12 md:col-span-4">
+                                        <CustomInput name={"mughalGarderP"} value={locationModel.mughalGarderP} onChange={onhandleChange} type="number" required={true} />
+                                        {validationModel.nameError}
+                                    </div>
+                                    <div className="col-span-12 md:col-span-2">
+                                        <h1 className='mt-2 text-end'>{locationModel.mughalGarderQ * locationModel.mughalGarderP}</h1>
+                                    </div>
+                                    {/*  */}
+
+
+                                    {/*  */}
+                                    <div className="col-span-12 md:col-span-2">
+                                        <h1 className='mt-2 text-center'>Mughal Garder</h1>
+                                        {validationModel.nameError}
+                                    </div>
+                                    <div className="col-span-12 md:col-span-4">
+                                        <CustomInput name={"crossPipeQ"} value={locationModel.crossPipeQ} onChange={onhandleChange} type="number" required={true} />
+                                        {validationModel.nameError}
+                                    </div>
+                                    <div className="col-span-12 md:col-span-4">
+                                        <CustomInput name={"crosspipeP"} value={locationModel.crosspipeP} onChange={onhandleChange} type="number" required={true} />
+                                        {validationModel.nameError}
+                                    </div>
+                                    <div className="col-span-12 md:col-span-2">
+                                        <h1 className='mt-2 text-end'>{locationModel.crossPipeQ * locationModel.crosspipeP}</h1>
+                                    </div>
+                                    {/*  */}
+
+
+
+                                    {/*  */}
+                                    <div className="col-span-12 border-t-2 md:col-span-8">
+                                        <h1 className='text-2xl font-semibold text-end'>TOTAL</h1>
+                                    </div>
+                                    <div className="col-span-12 border-t-2 md:col-span-4">
+                                        <h1 className='text-2xl font-semibold text-green-700 text-end'>{}</h1>
+                                    </div>
+                                    {/*  */}
+
+
+
                                 </div>
-                                </div>
-
-
-
+                              
                                 <div className="flex justify-end px-4 py-4 border-t-2">
                                     <CustomButton onClick={onAddBill} text={locationID ? "Update" : "Save"} />
                                     <button onClick={onClose} className="p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2"> Cancel</button>
@@ -136,7 +192,7 @@ const CreateBillPopup = ({ onClose, locationID }) => {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default CreateBillPopup
