@@ -103,7 +103,7 @@ export const ViewBillGrid = () => {
 
     return (
         <div className='border border-gray-400 rounded-md shadow-md p-2 mx-8 overflow-x-auto'>
-            <div className='flex justify-between mb-2 border-b-[1px]'>
+            <div className='flex justify-between items-center '>
                 <span className='text-[#0C7F80] p-2 font-semibold'>Bills</span>
                 {activeAccordion === true ? (
                     <BiSolidChevronUp
