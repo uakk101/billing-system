@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { BiSearch } from "react-icons/bi";
 import { ViewBillGrid } from './ViewBillGrid';
+import CustomButton from '../common/CustomButton';
 export const ViewBill = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -26,7 +27,8 @@ export const ViewBill = () => {
                         <input className='bg-[#F0F5FB] rounded-lg border items-center w-56 outline-none flex py-2 px-3' type="date" value={selectedDate} onChange={handleDateChange} />
                     </div>
                     <div>
-                        <button className='bg-[#F0F5FB] rounded-lg border items-center w-20 outline-none flex py-2 px-3'> Search </button>
+                        <CustomButton text={"Search"} extraClass="text-lg" />
+                        {/* <button className='bg-[#F0F5FB] rounded-lg border items-center w-20 outline-none flex py-2 px-3'> Search </button> */}
                         {/* <input className='bg-[#F0F5FB] rounded-lg border items-center w-56 outline-none flex py-2 px-3' type="date" value={selectedDate} onChange={handleDateChange} /> */}
                     </div>
                 </div>
