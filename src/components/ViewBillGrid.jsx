@@ -1,26 +1,72 @@
 import React, { useState } from 'react';
 import { BiSolidChevronDown, BiSolidChevronUp } from 'react-icons/bi';
 
-export const ViewBillGrid = () => {
+export const ViewBillGrid = ({ searchResults }) => {
     const [activeAccordion, setActiveAccordion] = useState(null);
 
+    // const columns = [
+    //     { name: 'مغل گارڈر' },
+    //     { name: 'کراس پائپ18G' },
+    //     { name: 'سی۔چینل' },
+    //     { name: 'بیس پلیٹ(5mm)8×8' },
+    //     { name: 'راول بولٹ' },
+    //     { name: 'نٹ بولٹGI' },
+    //     { name: 'کٹر ڈسک' },
+    //     { name: 'ویلڈنگ راڈ' },
+    //     { name: 'بلیک پینٹ' },
+    //     { name: 'سپرے پینٹ' },
+    //     { name: 'ایپوکسی' },
+    //     { name: 'نکے' },
+    //     { name: 'ملی ڈسک' },
+    //     { name: 'اینگل۔' },
+    //     { name: 'ٹاپ پلیٹ' },
+    // ];
+
+
     const columns = [
-        { name: 'مغل گارڈر' },
-        { name: 'کراس پائپ18G' },
-        { name: 'سی۔چینل' },
-        { name: 'بیس پلیٹ(5mm)8×8' },
-        { name: 'راول بولٹ' },
-        { name: 'نٹ بولٹGI' },
-        { name: 'کٹر ڈسک' },
-        { name: 'ویلڈنگ راڈ' },
-        { name: 'بلیک پینٹ' },
-        { name: 'سپرے پینٹ' },
-        { name: 'ایپوکسی' },
-        { name: 'نکے' },
-        { name: 'ملی ڈسک' },
-        { name: 'اینگل۔' },
-        { name: 'ٹاپ پلیٹ' },
+
+        // { name: "id" },
+        // { name: "companyName" },
+        // { name: "date" },
+        // { name: "total" },
+
+        { name: "Mughal Garder" },
+
+        { name: "Cross Pipe" },
+
+        { name: "C_Channel" },
+
+        { name: "Base Plate" },
+
+        { name: "rawalBolt" },
+
+        { name: "nutBolt" },
+
+        { name: "cutterDisk" },
+
+        { name: "weldingRod" },
+
+        { name: "blackPaint" },
+
+        { name: "sprayPaint" },
+
+        { name: "epoxy" },
+
+        { name: "nakky" },
+
+        { name: "miliDisk" },
+
+        { name: "angel" },
+
+        { name: "topPlate" },
+
+        { name: "panelInstallStructureQ" },
+        { name: "panelInstallStructureP" },
+        { name: "panelInstallStructureG" },
+        { name: "panelInstallStructureST" },
+        { name: "panelInstallStructureGT" },
     ];
+
 
     const staticData = [
         {

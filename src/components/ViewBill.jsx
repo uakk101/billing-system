@@ -4,6 +4,7 @@ import CustomButton from '../common/CustomButton';
 import CreateBillPopup from '../popups/create-billl-poup/CreateBillPopup';
 import CustomInput from '../common/CustomInput';
 import axios from 'axios';
+import { ViewBillGrid } from './ViewBillGrid';
 
 export const ViewBill = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +22,7 @@ export const ViewBill = () => {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.post('/api/search', {
+            const response = await axios.post('http://localhost:3001/api/search', {
                 companyName: searchQuery,
                 date: selectedDate
             });
@@ -44,7 +45,7 @@ export const ViewBill = () => {
         setNewBillPopup(true);
     };
 
-    console.log("searchResults" , searchResults)
+    console.log("searchResults", searchResults)
 
     return (
         <div>
@@ -67,7 +68,10 @@ export const ViewBill = () => {
                     </div>
                 </div>
             </div>
-            {/* Display search results */}
+
+
+            <ViewBillGrid searchResults={searchResults} />
+
             {searchResults.length > 0 && (
                 <div className="p-4">
                     <h2 className="mb-2 text-lg font-bold">Search Results:</h2>
