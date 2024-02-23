@@ -201,38 +201,61 @@ const CreateBillPopup = ({ onClose, locationID }) => {
         });
       };
 
-    
-
-      const onAddBill = async () => {
-          let my_validation = setValidation();
-          if (my_validation) {
+ 
+    const onAddBill = async () => {
+        let my_validation = setValidation();
+        if (my_validation) {
+          // Handle validation error
+        } else {
+          try {
+            // Calculate the T values
+            const updatedLocationModel = {
+              ...locationModel,
+              mughalGarderT: String(Number(locationModel.mughalGarderQ) * Number(locationModel.mughalGarderP)),
+              crossPipeT: String(Number(locationModel.crossPipeQ) * Number(locationModel.crosspipeP)),
+              cChannelT: String(Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)),
+              basePlateT: String(Number(locationModel.basePlateQ) * Number(locationModel.basePlateP)),
+              rawalBoltT: String(Number(locationModel.rawalBoltQ) * Number(locationModel.rawalBoltP)),
+              nutBoltT: String(Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)),
+              cutterDiskT: String(Number(locationModel.cutterDiskQ) * Number(locationModel.cutterDiskP)),
+              weldingRodT: String(Number(locationModel.weldingRodQ) * Number(locationModel.weldingRodP)),
+              blackPaintT: String(Number(locationModel.blackPaintQ) * Number(locationModel.blackPaintP)),
+              sprayPaintT: String(Number(locationModel.sprayPaintQ) * Number(locationModel.sprayPaintP)),
+              epoxyT: String(Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)),
+              nakkyT: String(Number(locationModel.nakkyQ) * Number(locationModel.nakkyP)),
+              miliDiskT: String(Number(locationModel.miliDiskQ) * Number(locationModel.miliDiskP)),
+              angelT: String(Number(locationModel.angelQ) * Number(locationModel.angelP)),
+              topPlateT: String(Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)),
+              panelInstallStructureST: String(Number(locationModel.panelInstallStructureQ) * Number(locationModel.panelInstallStructureP)),
+              panelInstallStructureGT: String(Number(locationModel.panelInstallStructureQ) * Number(locationModel.panelInstallStructureP) * Number(locationModel.panelInstallStructureG)),
+              
+            };
+      
+            const payload = {
+              locationModel: updatedLocationModel
+            };
+      
+            setLoading(true);
+            const response = await axios.post('http://localhost:3001/api/save', payload, {
+              headers: {
+                'Content-Type': 'application/json'
+              },
+            });
+            const data = response.data;
+            if (data.success) {
+              toast.success("Data saved successfully");
+              onClose();
+            } else {
+              toast.error("Error saving data");
+            }
+            setLoading(false);
+          } catch (error) {
+            ErrorHandlingMessage(error);
+            setLoading(false);
           }
-          else {
-              try {
-                  const payload = {
-                      locationModel: locationModel // Sending the locationModel object
-                  };
-                  setLoading(true);
-                  // Make POST request to save the data
-                  const response = await axios.post('http://localhost:3001/api/save', payload, {
-                      headers: {
-                          'Content-Type': 'application/json'
-                      },
-                  });
-                  const data = response.data;
-                  if (data.success) {
-                      toast.success("Data saved successfully");
-                      onClose();
-                  } else {
-                      toast.error("Error saving data");
-                  }
-                  setLoading(false);
-              } catch (error) {
-                  ErrorHandlingMessage(error);
-                  setLoading(false);
-              }
-          }
+        }
       };
+      
       
 
     useEffect(() => {
