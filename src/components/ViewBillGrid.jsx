@@ -102,17 +102,21 @@ export const ViewBillGrid = () => {
     };
 
     return (
-        <div className='border border-gray-400 rounded-md shadow-md p-2 mx-8 '>
-            <div className='flex justify-between items-center '>
-                <span className='text-[#0C7F80] p-2 font-semibold'>Bills</span>
+        <div className='p-2 mx-8 border border-gray-400 rounded-md shadow-md '>
+            <div className='flex items-center justify-between '>
+                <div className='flex'>
+                    <h1 className='text-[#0C7F80] p-2 font-semibold'>Company Name</h1>
+                    <h1 className='text-[#0C7F80] p-2 font-semibold'>01/02/2024</h1>
+                </div>
+
                 {activeAccordion === true ? (
                     <BiSolidChevronUp
-                        className='w-6 mr-3'
+                        className='w-6 mr-3 cursor-pointer'
                         onClick={() => handleClick(false)}
                     />
                 ) : (
                     <BiSolidChevronDown
-                        className='w-6 mr-3'
+                        className='w-6 mr-3 cursor-pointer'
                         onClick={() => handleClick(true)}
                     />
                 )}
@@ -121,7 +125,7 @@ export const ViewBillGrid = () => {
 
 
                 {activeAccordion && (
-                    <table className='w-full text-sm mb-4 '>
+                    <table className='w-full mb-4 text-sm '>
                         <thead className='bg-[#F5F5F5]'>
                             <tr className=''>
                                 {columns.map((column) => (
@@ -134,7 +138,7 @@ export const ViewBillGrid = () => {
                                 ))}
                             </tr>
                         </thead>
-                        <tbody className='border mt-4'>
+                        <tbody className='mt-4 border'>
                             {staticData.map((data, index) => (
                                 <tr key={data.id} className={`h-10 ${index === staticData.length - 1 ? 'font-semibold' : ''} `}>
                                     {columns.map((column) => (
