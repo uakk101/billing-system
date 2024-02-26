@@ -57,7 +57,22 @@ export const ViewBillGrid = ({ searchResults }) => {
 
                     return (
                       <tr key={index}>
-                        <td>{name}</td>
+                        {name === "mughalGarder" && <td>Mughal Garder</td>}
+                        {name === "crossPipe" && <td>Cross Pipe</td>}
+                        {name === "cChannel" && <td>C Channel</td>}
+                        {name === "basePlate" && <td>Base Plate</td>}
+                        {name === "rawalBolt" && <td>Rawal Bol</td>}
+                        {name === "nutBolt" && <td>Nut Bolt</td>}
+                        {name === "cutterDisk" && <td>Cutter Disk</td>}
+                        {name === "weldingRod" && <td>Welding Rod</td>}
+                        {name === "blackPaint" && <td>Black Paint</td>}
+                        {name === "sprayPaint" && <td>Spray Paint</td>}
+                        {name === "epoxy" && <td>Epoxy</td>}
+                        {name === "nakky" && <td>Nakky</td>}
+                        {name === "miliDisk" && <td>Mili Disk</td>}
+                        {name === "angel" && <td>Angel</td>}
+                        {name === "topPlate" && <td>Top Plate</td>}
+                        {name === "panelInstallStructure" && <td>Panel Install Structure</td>}
                         <td>{quantity}</td>
                         <td>{price}</td>
                         <td>{total}</td>
