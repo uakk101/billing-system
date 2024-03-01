@@ -61,6 +61,7 @@ export const ViewBill = () => {
     }
   };
   useEffect(() => {
+    console.log("featch data")
     fetchData();
   }, []);
 
@@ -105,7 +106,7 @@ export const ViewBill = () => {
         </div>
       </div>
 
-      <ViewBillGrid fetchData={fetchData()} searchResults={searchResults} />
+      <ViewBillGrid fetchData={fetchData} searchResults={searchResults} />
     </div>
   );
 };
