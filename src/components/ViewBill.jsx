@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import CustomButton from "../common/CustomButton";
 import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
 import axios from "axios";
 import { ViewBillGrid } from "./ViewBillGrid";
 import { toast } from "react-toastify";
+
 
 export const ViewBill = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +24,7 @@ export const ViewBill = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.post("http://localhost:3001/api/search", {
-        companyName: searchQuery,
+        companyName: searchQuery.toUpperCase,
         date: selectedDate,
       });
       const data = response.data;
@@ -33,6 +34,7 @@ export const ViewBill = () => {
         console.error("Error searching data:", data.message);
       }
     } catch (error) {
+      toast.error("Data not found");
       console.error("Error searching data:", error);
     }
   };
@@ -45,10 +47,28 @@ export const ViewBill = () => {
     setNewBillPopup(true);
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/getAllData');
+      const data = response.data;
+      if (data.success) {
+        setSearchResults(data.data);
+      } else {
+        console.error('Error retrieving all data:', data.message);
+      }
+    } catch (error) {
+      console.error('Error retrieving all data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
   return (
     <div>
       {newBillPopup && (
-        <CreateBillPopup onClose={onClosePopup}  billID={""} />
+        <CreateBillPopup onClose={onClosePopup} billID={""} />
       )}
       <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">
@@ -85,7 +105,7 @@ export const ViewBill = () => {
         </div>
       </div>
 
-      <ViewBillGrid searchResults={searchResults} />
+      <ViewBillGrid fetchData={fetchData()} searchResults={searchResults} />
     </div>
   );
 };

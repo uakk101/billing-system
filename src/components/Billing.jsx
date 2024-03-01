@@ -22,20 +22,16 @@ const Billing = () => {
     "اینگل۔",
     "ٹاپ پلیٹ",
   ];
-  
-  const [validationModel, setValidationModel] = useState({
-    nameError: null,
-    zipCodeError: null
-  })
 
-//   const setValidation = () => {
-//     let validation_Obj = {
-//         ...validationModel,
-//         // nameError: Validator(model.name, [V_Type.required], ['name is required'],),
-//     }
-//     setValidationModel(validation_Obj)
-//     return Validator(validation_Obj, V_Type.NullCheck);
-// }
+
+  //   const setValidation = () => {
+  //     let validation_Obj = {
+  //         ...validationModel,
+  //         // nameError: Validator(model.name, [V_Type.required], ['name is required'],),
+  //     }
+  //     setValidationModel(validation_Obj)
+  //     return Validator(validation_Obj, V_Type.NullCheck);
+  // }
 
   const [inputValues, setInputValues] = useState({});
   const handleChange = (inputNumber, value) => {
@@ -62,82 +58,7 @@ const Billing = () => {
   };
 
 
-  //   if (name === "datePicker") {
-  //     setInputValues((prevInputValues) => ({
-  //       ...prevInputValues,
-  //       date: value,
-  //     }));
-  //   } else if (name.includes("_1") || name.includes("_2")) {
-  //     const baseItem = name.replace(/_[12]/, "");
-  //     const value1 = parseFloat(inputValues[`${baseItem}_1`] || 0);
-  //     const value2 = parseFloat(inputValues[`${baseItem}_2`] || 0);
 
-  //     if (!isNaN(value1) && !isNaN(value2)) {
-  //       setInputValues((prevInputValues) => ({
-  //         ...prevInputValues,
-  //         result1: {
-  //           ...prevInputValues.result1,
-  //           [baseItem]: value1 * value2,
-  //         },
-  //       }));
-  //     }
-  //   } else {
-  //     setInputValues((prevInputValues) => ({
-  //       ...prevInputValues,
-  //       [name]: value,
-  //     }));
-  //   }
-  // };
-  // const handleInputChange = (name, value) => {
-  //   if (name === "datePicker") {
-  //     setInputValues((prevInputValues) => ({
-  //       ...prevInputValues,
-  //       date: value,
-  //     }));
-  //   } else if (name.includes("_1") || name.includes("_2")) {
-  //     const baseItem = name.replace(/_[12]/, "");
-  //     const value1 = parseFloat(inputValues[`${baseItem}_1`] || 0);
-  //     const value2 = parseFloat(inputValues[`${baseItem}_2`] || 0);
-
-  //     if (!isNaN(value1) && !isNaN(value2)) {
-  //       setInputValues((prevInputValues) => ({
-  //         ...prevInputValues,
-  //         result1: {
-  //           ...prevInputValues.result1,
-  //           [baseItem]: value1 * value2,
-  //         },
-  //       }));
-  //     }
-  //   } else {
-  //     setInputValues((prevInputValues) => ({
-  //       ...prevInputValues,
-  //       [name]: value,
-  //     }));
-  //   }
-  // };
-
-  // const handleInputChange = (name, value) => {
-  //   if (name.includes("_1") || name.includes("_2")) {
-  //     const baseItem = name.replace(/_[12]/, "");
-  //     const value1 = parseFloat(inputValues[`${baseItem}_1`] || 0);
-  //     const value2 = parseFloat(inputValues[`${baseItem}_2`] || 0);
-
-  //     if (!isNaN(value1) && !isNaN(value2)) {
-  //       setInputValues((prevInputValues) => ({
-  //         ...prevInputValues,
-  //         result1: {
-  //           ...prevInputValues.result1,
-  //           [baseItem]: value1 * value2,
-  //         },
-  //       }));
-  //     }
-  //   }
-
-  //   setInputValues((prevInputValues) => ({
-  //     ...prevInputValues,
-  //     [name]: value,
-  //   }));
-  // };
   const handleInputChange = (name, value) => {
     if (name === "datePicker") {
       setInputValues((prevInputValues) => ({
@@ -148,7 +69,7 @@ const Billing = () => {
       const baseItem = name.replace(/_[12]/, "");
       const value1 = parseFloat(inputValues[`${baseItem}_1`] || 0);
       const value2 = parseFloat(inputValues[`${baseItem}_2`] || 0);
-  
+
       if (!isNaN(value1) && !isNaN(value2)) {
         setInputValues((prevInputValues) => ({
           ...prevInputValues,
@@ -165,14 +86,14 @@ const Billing = () => {
       }));
     }
   };
-  
+
   const handleClearAll = () => {
     setInputValues({});
   };
 
 
   const handleSave = () => {
-    console.log("date" , inputValues.date);
+    console.log("date", inputValues.date);
     const items = data.map((item) => ({
       name: item,
       quantity: parseFloat(inputValues[`${item}_1`] || 0),
@@ -278,7 +199,7 @@ const Billing = () => {
                 className="p-1 text-sm text-white transition-all bg-red-500 border rounded-md shadow-xl hover:bg-red-400"
                 onClick={handleClearAll}
               >
-                Clear All 
+                Clear All
               </button>
               <button
                 className="p-1 mr-2 text-sm text-white transition-all bg-green-500 border rounded-md shadow-xl hover:bg-green-600"

@@ -2,24 +2,63 @@ import React, { useState } from "react";
 import { BiSolidChevronDown, BiSolidChevronUp } from "react-icons/bi";
 import CustomButton from "../common/CustomButton";
 import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
+import ConfirmationPopup from "../popups/ConfirmationPopup/ConfirmationPopup";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-export const ViewBillGrid = ({ searchResults }) => {
+export const ViewBillGrid = ({ searchResults, fetchData }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
   const [newBillPopup, setNewBillPopup] = useState(false);
-  const [billId , setBillId] = useState()
-  const handleClick = () => {
-    setActiveAccordion(!activeAccordion);
+  const [newDeletePopup, setDeletePopup] = useState(false);
+  const [billId, setBillId] = useState()
+  // const handleClick = () => {
+  //   setActiveAccordion(!activeAccordion);
+  // };
+  const handleClick = (index) => {
+    setActiveAccordion(activeAccordion === index ? null : index);
   };
 
   const onOpenPopup = (id) => {
     setBillId(id)
     setNewBillPopup(true)
-    
+
   }
 
   const onClosePopup = (e, isSaved) => {
     setNewBillPopup(false);
   };
+  const openDeletePopup = (id) => {
+    setBillId(id)
+    setDeletePopup(true)
+
+  }
+
+  const closeDeletePopup = (e, isSaved) => {
+    setDeletePopup(false);
+    fetchData()
+  };
+
+
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:3001/api/delete/${billId}`);
+      const data = response.data;
+      if (data.success) {
+        console.log("Successfully deleted data:", data.message);
+        toast.success("Deleted Successfully")
+        // Handle any additional logic or UI updates after successful deletion
+      } else {
+        console.error("Error deleting data:", data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+    setDeletePopup(false);
+  };
+
+
+
 
 
   const renderGrid = () => {
@@ -33,33 +72,22 @@ export const ViewBillGrid = ({ searchResults }) => {
         key={index}
         className="p-2 mx-8 mb-4 border border-gray-400 rounded-md shadow-md"
       >
-        <div className="flex items-center justify-between ">
-          <div className="flex">
-
-            <h1 className="text-[#0C7F80] p-2 font-semibold">
+        <div className="flex items-center justify-between">
+          <div className="flex gap-2 justify-between">
+            <h1 className="text-[#0C7F80]  font-semibold">
               {result.companyName}
             </h1>
-            <h1 className="text-[#0C7F80] p-2 font-semibold">{result.date}</h1>
-            <div className="flex gap-2">
-            <CustomButton  onClick={() => onOpenPopup(result._id)}  type={"outline"} text={"Update"} />
-            <CustomButton type={"delete"} text={"Delete"} />
-            </div>
+            <h1 className="text-[#0C7F80] font-semibold">{result.date}</h1>
           </div>
 
-          {activeAccordion ? (
-            <BiSolidChevronUp
-              className="w-6 mr-3 cursor-pointer"
-              onClick={handleClick}
-            />
-          ) : (
-            <BiSolidChevronDown
-              className="w-6 mr-3 cursor-pointer"
-              onClick={handleClick}
-            />
-          )}
+          <div className="flex gap-2 items-center">
+            <CustomButton onClick={() => onOpenPopup(result._id)} type={"outline"} text={"Update"} />
+            <CustomButton onClick={() => openDeletePopup(result._id)} type={"delete"} text={"Delete"} />
+            {activeAccordion === index ? <BiSolidChevronUp className='w-6 cursor-pointer' onClick={() => handleClick(index)} /> : <BiSolidChevronDown className='w-6 cursor-pointer' onClick={() => handleClick(index)} />}
+          </div>
         </div>
-        {activeAccordion && (
-          <div className="overflow-x-auto">
+        {activeAccordion === index ? (
+          <div className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? ' h-[475px]' : ''}`}>
             <table className="w-full text-sm">
               <thead className="bg-[#F5F5F5]">
                 <tr className="text-lg">
@@ -134,16 +162,20 @@ export const ViewBillGrid = ({ searchResults }) => {
               </tbody>
             </table>
           </div>
-        )}
+        ) : ""}
       </div>
     ));
   };
 
   return <div>
-      {newBillPopup && (
-        <CreateBillPopup onClose={onClosePopup}  billID={billId} />
-      )}
+    {newBillPopup && (
+
+      <CreateBillPopup onClose={onClosePopup} billID={billId} />
+
+
+    )}
+    {newDeletePopup && <ConfirmationPopup onConfirm={handleDelete} onCancel={closeDeletePopup} />}
     {renderGrid()}
-    
-    </div>;
+
+  </div>;
 };
