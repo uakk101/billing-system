@@ -9,7 +9,8 @@ import Validator, {
 } from "react-form-supervalidator";
 import { ErrorHandlingMessage } from "../../Utils/ErrorHandlingMessage";
 
-const CreateBillPopup = ({ onClose, locationID }) => {
+const CreateBillPopup = ({ onClose, billID }) => {
+
   const [locationModel, setLocationModel] = useState({
     id: 0,
     companyName: "",
@@ -446,19 +447,148 @@ const CreateBillPopup = ({ onClose, locationID }) => {
       }
     }
   };
+ 
 
-  //   useEffect(() => {
-  //     if (locationID) {
-  //       (async () => {
-  //         setLoading(true);
-  //         try {
-  //           setLoading(false);
-  //         } catch (error) {
-  //           ErrorHandlingMessage(error);
-  //         }
-  //       })();
+  // const onAddBill = async () => {
+  //   let my_validation = setValidation();
+  //   if (my_validation) {
+  //     // Handle validation error
+  //   } else {
+  //     try {
+  //       // Calculate the T values
+  //       const updatedLocationModel = {
+  //         ...locationModel,
+  //         mughalGarderT: String(
+  //           Number(locationModel.mughalGarderQ) *
+  //             Number(locationModel.mughalGarderP)
+  //         ),
+  //         crossPipeT: String(
+  //           Number(locationModel.crossPipeQ) * Number(locationModel.crosspipeP)
+  //         ),
+  //         cChannelT: String(
+  //           Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)
+  //         ),
+  //         basePlateT: String(
+  //           Number(locationModel.basePlateQ) * Number(locationModel.basePlateP)
+  //         ),
+  //         rawalBoltT: String(
+  //           Number(locationModel.rawalBoltQ) * Number(locationModel.rawalBoltP)
+  //         ),
+  //         nutBoltT: String(
+  //           Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)
+  //         ),
+  //         cutterDiskT: String(
+  //           Number(locationModel.cutterDiskQ) *
+  //             Number(locationModel.cutterDiskP)
+  //         ),
+  //         weldingRodT: String(
+  //           Number(locationModel.weldingRodQ) *
+  //             Number(locationModel.weldingRodP)
+  //         ),
+  //         blackPaintT: String(
+  //           Number(locationModel.blackPaintQ) *
+  //             Number(locationModel.blackPaintP)
+  //         ),
+  //         sprayPaintT: String(
+  //           Number(locationModel.sprayPaintQ) *
+  //             Number(locationModel.sprayPaintP)
+  //         ),
+  //         epoxyT: String(
+  //           Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)
+  //         ),
+  //         nakkyT: String(
+  //           Number(locationModel.nakkyQ) * Number(locationModel.nakkyP)
+  //         ),
+  //         miliDiskT: String(
+  //           Number(locationModel.miliDiskQ) * Number(locationModel.miliDiskP)
+  //         ),
+  //         angelT: String(
+  //           Number(locationModel.angelQ) * Number(locationModel.angelP)
+  //         ),
+  //         topPlateT: String(
+  //           Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)
+  //         ),
+  //         panelInstallStructureST: String(
+  //           Number(locationModel.panelInstallStructureQ) *
+  //             Number(locationModel.panelInstallStructureP)
+  //         ),
+  //         panelInstallStructureGT: String(
+  //           Number(locationModel.panelInstallStructureQ) *
+  //             Number(locationModel.panelInstallStructureP) *
+  //             Number(locationModel.panelInstallStructureG)
+  //         ),
+  //         total: Object.keys(locationModel)
+  //           .filter((k) => !k.endsWith("Q"))
+  //           .reduce((accumulator, key) => {
+  //             if (key.endsWith("P")) {
+  //               accumulator +=
+  //                 (locationModel[key] || 0) *
+  //                 (locationModel[key.slice(0, key.length - 1) + "Q"] || 0);
+  //             }
+  //             return accumulator;
+  //           }, 0),
+  //       };
+  
+  //       const payload = {
+  //         locationModel: updatedLocationModel,
+  //       };
+  
+  //       setLoading(true);
+  //       let response;
+  
+  //       if (locationModel._id) {
+  //         // If _id exists, update existing data
+  //         response = await axios.put(`http://localhost:3001/api/update/${locationModel._id}`, payload, {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         });
+  //       } else {
+  //         // If _id doesn't exist, save new data
+  //         response = await axios.post("http://localhost:3001/api/save", payload, {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         });
+  //       }
+  //       const data = response.data;
+  //       if (data.success) {
+  //         toast.success("Data saved successfully");
+  //         // onClose();
+  //       } else {
+  //         toast.error("Error saving data");
+  //       }
+  //       setLoading(false);
+  //     } catch (error) {
+  //       ErrorHandlingMessage(error);
+  //       setLoading(false);
   //     }
-  //   }, [locationID]);
+  //   }
+  // };
+  
+    
+
+    useEffect(() => {
+      const fetchData = async () => {
+        if (billID) {
+          setLoading(true);
+          try {
+            const response = await axios.get(`http://localhost:3001/api/getData/${billID}`, {
+              // Data to update, if needed
+            });
+            setLoading(false);
+            setLocationModel(response.data.data);
+            console.log("response" , response);
+          } catch (error) {
+            setLoading(false);
+            // setError(error.message || 'An error occurred');
+          }
+        }
+      };
+      fetchData();
+    }, [billID]);
+
+
 
   return (
     <div>
@@ -476,7 +606,7 @@ const CreateBillPopup = ({ onClose, locationID }) => {
               <div className="bg-white ">
                 <div className="flex justify-between px-4 py-4 border-b-2">
                   <h2 className="text-xl font-semibold">
-                    {locationID ? "Update Bill" : "Add Bill"}
+                    {billID ? "Update Bill" : "Add Bill"}
                   </h2>
                   <button
                     onClick={onClose}
@@ -486,7 +616,7 @@ const CreateBillPopup = ({ onClose, locationID }) => {
                   </button>
                 </div>
                 {/* 
-                                <div  className='rtl-container'> */}
+                 <div  className='rtl-container'> */}
                 <div className="grid grid-cols-12 gap-4 px-4 py-4">
                   <div className="col-span-12 md:col-span-6">
                     <CustomInput
@@ -1085,7 +1215,7 @@ const CreateBillPopup = ({ onClose, locationID }) => {
                 <div className="flex justify-end px-4 py-4 border-t-2">
                   <CustomButton
                     onClick={onAddBill}
-                    text={locationID ? "Update" : "Save"}
+                    text={billID ? "Update" : "Save"}
                   />
                   <button
                     onClick={onClose}

@@ -1,27 +1,49 @@
 import React, { useState } from "react";
 import { BiSolidChevronDown, BiSolidChevronUp } from "react-icons/bi";
+import CustomButton from "../common/CustomButton";
+import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
 
 export const ViewBillGrid = ({ searchResults }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
-
+  const [newBillPopup, setNewBillPopup] = useState(false);
+  const [billId , setBillId] = useState()
   const handleClick = () => {
     setActiveAccordion(!activeAccordion);
   };
-  console.log("show searchResults", searchResults)
+
+  const onOpenPopup = (id) => {
+    setBillId(id)
+    setNewBillPopup(true)
+    
+  }
+
+  const onClosePopup = (e, isSaved) => {
+    setNewBillPopup(false);
+  };
+
+
   const renderGrid = () => {
+
+
+
     if (!searchResults) return null;
 
     return searchResults.map((result, index) => (
       <div
         key={index}
-        className="p-2 mx-8 border border-gray-400 rounded-md shadow-md mb-4"
+        className="p-2 mx-8 mb-4 border border-gray-400 rounded-md shadow-md"
       >
         <div className="flex items-center justify-between ">
           <div className="flex">
+
             <h1 className="text-[#0C7F80] p-2 font-semibold">
               {result.companyName}
             </h1>
             <h1 className="text-[#0C7F80] p-2 font-semibold">{result.date}</h1>
+            <div className="flex gap-2">
+            <CustomButton  onClick={() => onOpenPopup(result._id)}  type={"outline"} text={"Update"} />
+            <CustomButton type={"delete"} text={"Delete"} />
+            </div>
           </div>
 
           {activeAccordion ? (
@@ -85,7 +107,7 @@ export const ViewBillGrid = ({ searchResults }) => {
                 <tr >
                   <td colSpan={3}></td>
 
-                  <td className="font-bold text-xl text-green-600">{result.total}</td>
+                  <td className="text-xl font-bold text-green-600">{result.total}</td>
                 </tr>
               </tbody>
             </table>
@@ -117,5 +139,11 @@ export const ViewBillGrid = ({ searchResults }) => {
     ));
   };
 
-  return <>{renderGrid()}</>;
+  return <div>
+      {newBillPopup && (
+        <CreateBillPopup onClose={onClosePopup}  billID={billId} />
+      )}
+    {renderGrid()}
+    
+    </div>;
 };

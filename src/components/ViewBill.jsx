@@ -48,7 +48,7 @@ export const ViewBill = () => {
   return (
     <div>
       {newBillPopup && (
-        <CreateBillPopup onClose={onClosePopup} locationID={false} />
+        <CreateBillPopup onClose={onClosePopup}  billID={""} />
       )}
       <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">
