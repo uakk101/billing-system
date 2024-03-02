@@ -60,7 +60,7 @@ export const ViewBill = () => {
     }
   };
   useEffect(() => {
-    console.log("featch data");
+    // console.log("featch data");
     fetchData();
   }, []);
 
