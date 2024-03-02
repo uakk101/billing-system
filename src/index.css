@@ -3,46 +3,45 @@
 @tailwind utilities;
 
 :root {
-    --primary-gray: #f7f7f7c7;
-    --primaryColor: #f45d48;
-    --secondaryColor: #0a8080;
-    /* --primaryColor: #f45d48;
+  --primary-gray: #f7f7f7c7;
+  --primaryColor: #f45d48;
+  --secondaryColor: #0a8080;
+  /* --primaryColor: #f45d48;
     --secondaryColor: #0a8080; */
-    --primaryLightColor: #f8f5f2;
-    --primaryLightColorTwo: #feefe8;
-    --primaryLightColorThree: #fff2df;
-    --textColor: #363636;
-    --linkColor: #2994ef;
-    --linkHovered: #0575d7;
+  --primaryLightColor: #f8f5f2;
+  --primaryLightColorTwo: #feefe8;
+  --primaryLightColorThree: #fff2df;
+  --textColor: #363636;
+  --linkColor: #2994ef;
+  --linkHovered: #0575d7;
 }
 
 /* width */
 ::-webkit-scrollbar,
 ::-webkit-scrollbar:horizontal {
-    height: 6px;
-    /* height of horizontal scrollbar  */
-    width: 6px;
-    /* width of vertical scrollbar */
+  height: 6px;
+  /* height of horizontal scrollbar  */
+  width: 6px;
+  /* width of vertical scrollbar */
 }
 
 /* Track */
 ::-webkit-scrollbar-track,
 ::-webkit-scrollbar:horizontal {
-    box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.272);
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.141);
+  box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.272);
+  border-radius: 10px;
+  background-color: rgba(128, 128, 128, 0.141);
 }
 
-::-webkit-scrollbar-thumb,
+/* ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:hover {
     border-radius: 10px;
     background: #f45d48;
-}
-
+} */
 
 /* Handle */
 
-::-webkit-scrollbar:horizontal {
+/* ::-webkit-scrollbar:horizontal {
     background: #f8f7f7;
     border-radius: 10px;
-}
+} */

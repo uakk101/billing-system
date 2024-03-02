@@ -9,8 +9,7 @@ import Validator, {
 } from "react-form-supervalidator";
 import { ErrorHandlingMessage } from "../../Utils/ErrorHandlingMessage";
 
-const CreateBillPopup = ({ onClose, billID }) => {
-
+const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   const [locationModel, setLocationModel] = useState({
     id: 0,
     companyName: "",
@@ -350,7 +349,7 @@ const CreateBillPopup = ({ onClose, billID }) => {
           ...locationModel,
           mughalGarderT: String(
             Number(locationModel.mughalGarderQ) *
-            Number(locationModel.mughalGarderP)
+              Number(locationModel.mughalGarderP)
           ),
           crossPipeT: String(
             Number(locationModel.crossPipeQ) * Number(locationModel.crosspipeP)
@@ -369,19 +368,19 @@ const CreateBillPopup = ({ onClose, billID }) => {
           ),
           cutterDiskT: String(
             Number(locationModel.cutterDiskQ) *
-            Number(locationModel.cutterDiskP)
+              Number(locationModel.cutterDiskP)
           ),
           weldingRodT: String(
             Number(locationModel.weldingRodQ) *
-            Number(locationModel.weldingRodP)
+              Number(locationModel.weldingRodP)
           ),
           blackPaintT: String(
             Number(locationModel.blackPaintQ) *
-            Number(locationModel.blackPaintP)
+              Number(locationModel.blackPaintP)
           ),
           sprayPaintT: String(
             Number(locationModel.sprayPaintQ) *
-            Number(locationModel.sprayPaintP)
+              Number(locationModel.sprayPaintP)
           ),
           epoxyT: String(
             Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)
@@ -400,12 +399,12 @@ const CreateBillPopup = ({ onClose, billID }) => {
           ),
           panelInstallStructureST: String(
             Number(locationModel.panelInstallStructureQ) *
-            Number(locationModel.panelInstallStructureP)
+              Number(locationModel.panelInstallStructureP)
           ),
           panelInstallStructureGT: String(
             Number(locationModel.panelInstallStructureQ) *
-            Number(locationModel.panelInstallStructureP) *
-            Number(locationModel.panelInstallStructureG)
+              Number(locationModel.panelInstallStructureP) *
+              Number(locationModel.panelInstallStructureG)
           ),
           total: Object.keys(locationModel)
             .filter((k) => !k.endsWith("Q"))
@@ -436,6 +435,8 @@ const CreateBillPopup = ({ onClose, billID }) => {
         const data = response.data;
         if (data.success) {
           toast.success("Data saved successfully");
+          // should be added to run get all data here
+          fetchData();
           //   onClose();
         } else {
           toast.error("Error saving data");
@@ -448,15 +449,17 @@ const CreateBillPopup = ({ onClose, billID }) => {
     }
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       if (billID) {
         // setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3001/api/getData/${billID}`, {
-            // Data to update, if needed
-          });
+          const response = await axios.get(
+            `http://localhost:3001/api/getData/${billID}`,
+            {
+              // Data to update, if needed
+            }
+          );
           // setLoading(false);
           setLocationModel(response.data.data);
           console.log("response", response);
@@ -469,10 +472,8 @@ const CreateBillPopup = ({ onClose, billID }) => {
     fetchData();
   }, [billID]);
 
-
-
   return (
-    <div className="h-96 overflow-y-auto" >
+    <div className="h-96 overflow-y-auto">
       {/* {loading && <FullPageLoader allowFullScreen={true} />} */}
       <div
         className="relative z-10"
@@ -522,8 +523,6 @@ const CreateBillPopup = ({ onClose, billID }) => {
                     />
                     {validationModel.dateError}
                   </div>
-
-
 
                   {/*  */}
                   <div className="col-span-12 md:col-span-2">
@@ -583,7 +582,13 @@ const CreateBillPopup = ({ onClose, billID }) => {
                     <h1 className="mt-2 text-center">Cross Pipe</h1>
                   </div>
                   <div className="col-span-12 md:col-span-4">
-                    <CustomInput name={"crossPipeQ"} value={locationModel.crossPipeQ} onChange={onhandleChange} type="number" required={true} />
+                    <CustomInput
+                      name={"crossPipeQ"}
+                      value={locationModel.crossPipeQ}
+                      onChange={onhandleChange}
+                      type="number"
+                      required={true}
+                    />
                     {validationModel.crossPipeQError}
                   </div>
                   <div className="col-span-12 md:col-span-4">

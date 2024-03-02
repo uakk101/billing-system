@@ -6,7 +6,6 @@ import axios from "axios";
 import { ViewBillGrid } from "./ViewBillGrid";
 import { toast } from "react-toastify";
 
-
 export const ViewBill = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -49,27 +48,30 @@ export const ViewBill = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/getAllData');
+      const response = await axios.get("http://localhost:3001/api/getAllData");
       const data = response.data;
       if (data.success) {
         setSearchResults(data.data);
       } else {
-        console.error('Error retrieving all data:', data.message);
+        console.error("Error retrieving all data:", data.message);
       }
     } catch (error) {
-      console.error('Error retrieving all data:', error);
+      console.error("Error retrieving all data:", error);
     }
   };
   useEffect(() => {
-    console.log("featch data")
+    console.log("featch data");
     fetchData();
   }, []);
-
 
   return (
     <div>
       {newBillPopup && (
-        <CreateBillPopup onClose={onClosePopup} billID={""} />
+        <CreateBillPopup
+          onClose={onClosePopup}
+          billID={""}
+          fetchData={fetchData}
+        />
       )}
       <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">
