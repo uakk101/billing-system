@@ -10,7 +10,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [newDeletePopup, setDeletePopup] = useState(false);
-  const [billId, setBillId] = useState()
+  const [billId, setBillId] = useState();
   // const handleClick = () => {
   //   setActiveAccordion(!activeAccordion);
   // };
@@ -19,34 +19,32 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
   };
 
   const onOpenPopup = (id) => {
-    setBillId(id)
-    setNewBillPopup(true)
-
-  }
+    setBillId(id);
+    setNewBillPopup(true);
+  };
 
   const onClosePopup = (e, isSaved) => {
     setNewBillPopup(false);
   };
   const openDeletePopup = (id) => {
-    setBillId(id)
-    setDeletePopup(true)
-
-  }
+    setBillId(id);
+    setDeletePopup(true);
+  };
 
   const closeDeletePopup = (e, isSaved) => {
     setDeletePopup(false);
-    fetchData()
+    fetchData();
   };
-
-
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:3001/api/delete/${billId}`);
+      const response = await axios.delete(
+        `http://localhost:3001/api/delete/${billId}`
+      );
       const data = response.data;
       if (data.success) {
         console.log("Successfully deleted data:", data.message);
-        toast.success("Deleted Successfully")
+        toast.success("Deleted Successfully");
         // Handle any additional logic or UI updates after successful deletion
       } else {
         console.error("Error deleting data:", data.message);
@@ -57,14 +55,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
     setDeletePopup(false);
   };
 
-
-
-
-
   const renderGrid = () => {
-
-
-
     if (!searchResults) return null;
 
     return searchResults.map((result, index) => (
@@ -81,13 +72,35 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
           </div>
 
           <div className="flex gap-2 items-center">
-            <CustomButton onClick={() => onOpenPopup(result._id)} type={"outline"} text={"Update"} />
-            <CustomButton onClick={() => openDeletePopup(result._id)} type={"delete"} text={"Delete"} />
-            {activeAccordion === index ? <BiSolidChevronUp className='w-6 cursor-pointer' onClick={() => handleClick(index)} /> : <BiSolidChevronDown className='w-6 cursor-pointer' onClick={() => handleClick(index)} />}
+            <CustomButton
+              onClick={() => onOpenPopup(result._id)}
+              type={"outline"}
+              text={"Update"}
+            />
+            <CustomButton
+              onClick={() => openDeletePopup(result._id)}
+              type={"delete"}
+              text={"Delete"}
+            />
+            {activeAccordion === index ? (
+              <BiSolidChevronUp
+                className="w-6 cursor-pointer"
+                onClick={() => handleClick(index)}
+              />
+            ) : (
+              <BiSolidChevronDown
+                className="w-6 cursor-pointer"
+                onClick={() => handleClick(index)}
+              />
+            )}
           </div>
         </div>
         {activeAccordion === index ? (
-          <div className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? ' h-[475px]' : ''}`}>
+          <div
+            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${
+              activeAccordion === index ? " h-[475px]" : ""
+            }`}
+          >
             <table className="w-full text-sm">
               <thead className="bg-[#F5F5F5]">
                 <tr className="text-lg">
@@ -122,20 +135,23 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                         {name === "miliDisk" && <td>Mili Disk</td>}
                         {name === "angel" && <td>Angel</td>}
                         {name === "topPlate" && <td>Top Plate</td>}
-                        {name === "panelInstallStructure" && <td>Panel Install Structure</td>}
+                        {name === "panelInstallStructure" && (
+                          <td>Panel Install Structure</td>
+                        )}
                         <td>{quantity}</td>
                         <td>{price}</td>
                         <td>{total}</td>
                       </tr>
-
                     );
                   }
                   return null;
                 })}
-                <tr >
+                <tr>
                   <td colSpan={3}></td>
 
-                  <td className="text-xl font-bold text-green-600">{result.total}</td>
+                  <td className="text-xl font-bold text-green-600">
+                    {result.total}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -143,10 +159,10 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
               <thead className="bg-[#F5F5F5]">
                 <tr className="text-base">
                   <th className="text-left">Name</th>
-                  <th className="text-left">Quantity</th>
-                  <th className="text-left">Price</th>
-                  <th className="text-left">Total</th>
-                  <th className="text-left">Total</th>
+                  <th className="text-left">Watts</th>
+                  <th className="text-left">Quantity(Panel)</th>
+                  <th className="text-left">Total Watt</th>
+                  <th className="text-left">Price Per watt</th>
                   <th className="text-left">Total</th>
                 </tr>
               </thead>
@@ -155,27 +171,32 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                   <td>PanelInstall Structure</td>
                   <td>{result.panelInstallStructureQ}</td>
                   <td>{result.panelInstallStructureP}</td>
-                  <td>{result.panelInstallStructureG}</td>
                   <td>{result.panelInstallStructureST}</td>
+                  <td>{result.panelInstallStructureG}</td>
                   <td>{result.panelInstallStructureGT}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        ) : ""}
+        ) : (
+          ""
+        )}
       </div>
     ));
   };
 
-  return <div>
-    {newBillPopup && (
-
-      <CreateBillPopup onClose={onClosePopup} billID={billId} />
-
-
-    )}
-    {newDeletePopup && <ConfirmationPopup onConfirm={handleDelete} onCancel={closeDeletePopup} />}
-    {renderGrid()}
-
-  </div>;
+  return (
+    <div>
+      {newBillPopup && (
+        <CreateBillPopup onClose={onClosePopup} billID={billId} />
+      )}
+      {newDeletePopup && (
+        <ConfirmationPopup
+          onConfirm={handleDelete}
+          onCancel={closeDeletePopup}
+        />
+      )}
+      {renderGrid()}
+    </div>
+  );
 };
