@@ -116,7 +116,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
               </thead>
               <tbody>
                 {Object.keys(result).map((key, index) => {
-                  if (key.endsWith("Q")) {
+                  if (key.endsWith("Q") && key !== "panelInstallStructureQ" ) {
                     const name = key.slice(0, -1); // Remove the last character 'Q'
                     const quantity = result[key];
                     const price = result[`${name}P`];
@@ -139,9 +139,6 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                         {name === "miliDisk" && <td>Mili Disk</td>}
                         {name === "angel" && <td>Angel</td>}
                         {name === "topPlate" && <td>Top Plate</td>}
-                        {name === "panelInstallStructure" && (
-                          <td>Panel Install Structure</td>
-                        )}
                         <td>{quantity}</td>
                         <td>{price}</td>
                         <td>{total}</td>
@@ -150,9 +147,10 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                   }
                   return null;
                 })}
-                <tr>
-                  <td colSpan={3}></td>
-                  <td className="text-xl font-bold text-green-600">
+                <tr className="border-t">
+                  <td colSpan={2}></td>
+                  <td className="text-xl font-bold ">Grand Total</td>
+                  <td className="text-xl font-bold text-red-700 ">
                     {result.total}
                   </td>
                 </tr>
@@ -176,7 +174,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                   <td>{result.panelInstallStructureP}</td>
                   <td>{result.panelInstallStructureST}</td>
                   <td>{result.panelInstallStructureG}</td>
-                  <td>{result.panelInstallStructureGT}</td>
+                  <td className="text-xl font-bold text-green-600">{result.panelInstallStructureGT}</td>
                 </tr>
               </tbody>
             </table>

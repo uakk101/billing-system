@@ -175,7 +175,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         ["it is required"]
       ),
       crossPipePError: Validator(
-        locationModel.crosspipeP,
+        locationModel.crossPipeP,
         [V_Type.required],
         ["it is required"]
       ),
@@ -352,7 +352,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
     });
   };
 
-  const onAddBill = async () => {
+  const onAddBill = async (flag) => {
     let my_validation = setValidation();
     if (my_validation) {
       // Handle validation error
@@ -362,11 +362,10 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         const updatedLocationModel = {
           ...locationModel,
           mughalGarderT: String(
-            Number(locationModel.mughalGarderQ) *
-              Number(locationModel.mughalGarderP)
+            Number(locationModel.mughalGarderQ) * Number(locationModel.mughalGarderP)
           ),
           crossPipeT: String(
-            Number(locationModel.crossPipeQ) * Number(locationModel.crosspipeP)
+            Number(locationModel.crossPipeQ) * Number(locationModel.crossPipeP)
           ),
           cChannelT: String(
             Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)
@@ -447,14 +446,18 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
           }
         );
         const data = response.data;
+        if(flag === true){
+          onClose();
+        }
+       
         if (data.success) {
-          toast.success("Data saved successfully");
-          // should be added to run get all data here
-          fetchData();
-          //   onClose();
+            toast.success("Data updated successfully");
+            fetchData();
+          
         } else {
           toast.error("Error saving data");
         }
+
         // setLoading(false);
       } catch (error) {
         ErrorHandlingMessage(error);
@@ -1134,14 +1137,14 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
                 <div className="flex justify-end px-4 py-4 border-t-2">
                   <CustomButton
-                    onClick={onAddBill}
+                     onClick={billID ? () => onAddBill(true) : () => onAddBill(false)}
                     text={billID ? "Update" : "Save"}
                   />
                   <button
                     onClick={onClose}
                     className="p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2"
                   >
-                    {" "}
+                    
                     Cancel
                   </button>
                   <button
