@@ -82,7 +82,7 @@ export const ViewBill = () => {
           fetchData={fetchData}
         />
       )}
-      <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
+      <div className="flex justify-center  p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">
           <div>
             <div className="bg-[#F0F5FB] rounded-lg border items-center w-96 outline-none flex py-2 px-3">
@@ -98,24 +98,24 @@ export const ViewBill = () => {
           </div>
           <div className="flex gap-2">
             {/* <CustomInput type="date" value={selectedDate} onChange={handleDateChange} /> */}
-            <div>
-              <label className="text-red-700" htmlFor="">start date</label>
-              <input
-                className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
-                type="date"
-                value={startDate}
-                onChange={handleStartDateChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="" className="text-red-700">end date</label>
-              <input
-                className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
-                type="date"
-                value={endDate}
-                onChange={handleEndDateChange}
-              />
-            </div>
+
+            <h1 className="text-red-700" htmlFor="">start date</h1>
+            <input
+              className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
+              type="date"
+              value={startDate}
+              onChange={handleStartDateChange}
+            />
+
+
+            <label htmlFor="" className="text-red-700">end date</label>
+            <input
+              className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
+              type="date"
+              value={endDate}
+              onChange={handleEndDateChange}
+            />
+
 
           </div>
           <div className="flex gap-8 item">

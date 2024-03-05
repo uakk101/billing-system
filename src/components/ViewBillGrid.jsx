@@ -65,15 +65,15 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         key={index}
         className="p-2 mx-8 mb-4 border border-gray-400 rounded-md shadow-md"
       >
-        <div className="flex items-center justify-between">
-          <div className="flex justify-between gap-2">
-            <h1 className="text-[#0C7F80]  font-semibold">
-              {result.companyName}
-            </h1>
-            <h1 className="text-[#0C7F80] font-semibold">{result.date}</h1>
-            <h1 className="text-[#0C7F80] font-semibold">{result.address}</h1>
-            <h1 className="text-[#0C7F80] font-semibold">{result.technition}</h1>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex justify-between items-center gap-2">
+            <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Date: </span>{result.date}</h1>
+            <h1 className="text-red-600 font-semibold"><span className="font-semibold text-black">Technition: </span>{result.technition}</h1>
+            <h1 className="text-[#0C7F80] text-sm "><span className="font-semibold text-black">Address: </span>{result.address}</h1>
           </div>
+          <h1 className="text-[#0C7F80]  font-semibold">
+            {result.companyName}
+          </h1>
 
           <div className="flex items-center gap-2">
             <CustomButton
@@ -101,22 +101,20 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         </div>
         {activeAccordion === index ? (
           <div
-            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${
-              activeAccordion === index ? " h-[475px]" : ""
-            }`}
+            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? " h-[475px]" : ""}`}
           >
             <table className="w-full text-sm">
-              <thead className="bg-[#F5F5F5]">
-                <tr className="text-lg">
-                  <th className="text-left">Name</th>
-                  <th className="text-left">Quantity</th>
-                  <th className="text-left">Price</th>
-                  <th className="text-left">Total</th>
+              <thead className="bg-[#F5F5F5] w-full">
+                <tr className="text-lg ">
+                  <th colSpan={3} className="text-left">Name</th>
+                  <th colSpan={1} className="text-right ">Quantity</th>
+                  <th colSpan={1} className="text-right ">Price</th>
+                  <th colSpan={1} className="text-center">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.keys(result).map((key, index) => {
-                  if (key.endsWith("Q") && key !== "panelInstallStructureQ" ) {
+                  if (key.endsWith("Q") && key !== "panelInstallStructureQ") {
                     const name = key.slice(0, -1); // Remove the last character 'Q'
                     const quantity = result[key];
                     const price = result[`${name}P`];
@@ -124,33 +122,32 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
 
                     return (
                       <tr key={index}>
-                        {name === "mughalGarder" && <td>Mughal Garder</td>}
-                        {name === "crossPipe" && <td>Cross Pipe</td>}
-                        {name === "cChannel" && <td>C Channel</td>}
-                        {name === "basePlate" && <td>Base Plate</td>}
-                        {name === "rawalBolt" && <td>Rawal Bol</td>}
-                        {name === "nutBolt" && <td>Nut Bolt</td>}
-                        {name === "cutterDisk" && <td>Cutter Disk</td>}
-                        {name === "weldingRod" && <td>Welding Rod</td>}
-                        {name === "blackPaint" && <td>Black Paint</td>}
-                        {name === "sprayPaint" && <td>Spray Paint</td>}
-                        {name === "epoxy" && <td>Epoxy</td>}
-                        {name === "nakky" && <td>Nakky</td>}
-                        {name === "miliDisk" && <td>Mili Disk</td>}
-                        {name === "angel" && <td>Angel</td>}
-                        {name === "topPlate" && <td>Top Plate</td>}
-                        <td>{quantity}</td>
-                        <td>{price}</td>
-                        <td>{total}</td>
+                        {name === "mughalGarder" && <td colSpan={3}>Mughal Garder</td>}
+                        {name === "crossPipe" && <td colSpan={3}>Cross Pipe</td>}
+                        {name === "cChannel" && <td colSpan={3}>C Channel</td>}
+                        {name === "basePlate" && <td colSpan={3}>Base Plate</td>}
+                        {name === "rawalBolt" && <td colSpan={3}>Rawal Bol</td>}
+                        {name === "nutBolt" && <td colSpan={3}>Nut Bolt</td>}
+                        {name === "cutterDisk" && <td colSpan={3}>Cutter Disk</td>}
+                        {name === "weldingRod" && <td colSpan={3}>Welding Rod</td>}
+                        {name === "blackPaint" && <td colSpan={3}>Black Paint</td>}
+                        {name === "sprayPaint" && <td colSpan={3}>Spray Paint</td>}
+                        {name === "epoxy" && <td colSpan={3}>Epoxy</td>}
+                        {name === "nakky" && <td colSpan={3}>Nakky</td>}
+                        {name === "miliDisk" && <td colSpan={3}>Mili Disk</td>}
+                        {name === "angel" && <td colSpan={3}>Angel</td>}
+                        {name === "topPlate" && <td colSpan={3}>Top Plate</td>}
+                        <td className="text-right pr-8" colSpan={1} >{quantity}</td>
+                        <td className="text-right pr-4" colSpan={1} >{price}</td>
+                        <td className="text-center" colSpan={1}>{total}</td>
                       </tr>
                     );
                   }
                   return null;
                 })}
                 <tr className="border-t">
-                  <td colSpan={2}></td>
-                  <td className="text-xl font-bold ">Grand Total</td>
-                  <td className="text-xl font-bold text-red-700 ">
+                  <td colSpan={3} className="text-xl font-bold  text-right "> </td>
+                  <td colSpan={3} className="text-right text-xl font-bold text-red-800 pr-32">
                     {result.total}
                   </td>
                 </tr>
@@ -195,7 +192,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         <ConfirmationPopup
           onConfirm={handleDelete}
           onCancel={closeDeletePopup}
-           
+
         />
       )}
       {renderGrid()}
