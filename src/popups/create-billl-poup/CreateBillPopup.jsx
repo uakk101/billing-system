@@ -14,6 +14,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
     id: 0,
     companyName: "",
     date: "",
+    technition : "",
+    address : "",
     total: "",
     mughalGarderQ: "",
     mughalGarderP: "",
@@ -97,6 +99,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   const [validationModel, setValidationModel] = useState({
     companyNameError: null,
     dateError: null,
+    technitionError : null,
+    addressError : null,
     mughalGarderPError: null,
     mughalGarderQError: null,
     crossPipeQError: null,
@@ -139,6 +143,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         locationModel.companyName,
         [V_Type.required],
         ["Company Name is required"]
+      ),
+      technitionError: Validator(
+        locationModel.technition,
+        [V_Type.required],
+        ["technition Name is required"]
+      ),
+      addressError: Validator(
+        locationModel.address,
+        [V_Type.required],
+        ["address is required"]
       ),
       dateError: Validator(
         locationModel.date,
@@ -473,7 +487,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   }, [billID]);
 
   return (
-    <div className="h-96 overflow-y-auto">
+    <div className="overflow-y-auto h-96">
       {/* {loading && <FullPageLoader allowFullScreen={true} />} */}
       <div
         className="relative z-10"
@@ -500,7 +514,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                 {/* 
                  <div  className='rtl-container'> */}
                 <div className="grid grid-cols-12 gap-4 px-4 py-4 ">
-                  <div className="col-span-12 md:col-span-6">
+                  <div className="col-span-6 md:col-span-4">
                     <CustomInput
                       name={"companyName"}
                       value={locationModel.companyName}
@@ -512,7 +526,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     />
                     {validationModel.companyNameError}
                   </div>
-                  <div className="col-span-12 md:col-span-6">
+                  <div className="col-span-6 md:col-span-4 ">
                     <CustomInput
                       name={"date"}
                       value={locationModel.date}
@@ -522,6 +536,30 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       required={true}
                     />
                     {validationModel.dateError}
+                  </div>
+                  <div className="col-span-6 md:col-span-4 ">
+                  <CustomInput
+                      name={"technition"}
+                      value={locationModel.technition}
+                      onChange={onhandleChange}
+                      label="Technician Name"
+                      type="text"
+                      placeholder=""
+                      required={true}
+                    />
+                    {validationModel.technitionError}
+                  </div>
+                  <div className="col-span-12 md:col-span-12 ">
+                  <CustomInput
+                      name={"address"}
+                      value={locationModel.address}
+                      onChange={onhandleChange}
+                      label="Address"
+                      type="text"
+                      placeholder="address"
+                      required={true}
+                    />
+                    {validationModel.addressError}
                   </div>
 
                   {/*  */}

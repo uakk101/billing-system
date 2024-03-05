@@ -32,8 +32,9 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
   };
 
   const closeDeletePopup = (e, isSaved) => {
+    // console.log("This is deleted")
+    // fetchData();
     setDeletePopup(false);
-    fetchData();
   };
 
   const handleDelete = async () => {
@@ -45,6 +46,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
       if (data.success) {
         console.log("Successfully deleted data:", data.message);
         toast.success("Deleted Successfully");
+        fetchData();
         // Handle any additional logic or UI updates after successful deletion
       } else {
         console.error("Error deleting data:", data.message);
@@ -64,14 +66,16 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         className="p-2 mx-8 mb-4 border border-gray-400 rounded-md shadow-md"
       >
         <div className="flex items-center justify-between">
-          <div className="flex gap-2 justify-between">
+          <div className="flex justify-between gap-2">
             <h1 className="text-[#0C7F80]  font-semibold">
               {result.companyName}
             </h1>
             <h1 className="text-[#0C7F80] font-semibold">{result.date}</h1>
+            <h1 className="text-[#0C7F80] font-semibold">{result.address}</h1>
+            <h1 className="text-[#0C7F80] font-semibold">{result.technition}</h1>
           </div>
 
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <CustomButton
               onClick={() => onOpenPopup(result._id)}
               type={"outline"}
@@ -148,7 +152,6 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                 })}
                 <tr>
                   <td colSpan={3}></td>
-
                   <td className="text-xl font-bold text-green-600">
                     {result.total}
                   </td>
@@ -194,6 +197,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         <ConfirmationPopup
           onConfirm={handleDelete}
           onCancel={closeDeletePopup}
+           
         />
       )}
       {renderGrid()}

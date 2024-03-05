@@ -8,23 +8,32 @@ import { toast } from "react-toastify";
 
 export const ViewBill = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
 
   const handleSearch = async () => {
     try {
       const response = await axios.post("http://localhost:3001/api/search", {
-        companyName: searchQuery.toUpperCase,
-        date: selectedDate,
+        companyName: searchQuery.toUpperCase(),
+        startDate: startDate,
+        endDate: endDate,
       });
       const data = response.data;
       if (data.success) {
@@ -87,14 +96,27 @@ export const ViewBill = () => {
               />
             </div>
           </div>
-          <div>
+          <div className="flex gap-2">
             {/* <CustomInput type="date" value={selectedDate} onChange={handleDateChange} /> */}
-            <input
-              className="bg-[#F0F5FB] rounded-lg border items-center w-56 outline-none flex py-2 px-3"
-              type="date"
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
+            <div>
+              <label className="text-red-700" htmlFor="">start date</label>
+              <input
+                className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
+                type="date"
+                value={startDate}
+                onChange={handleStartDateChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="" className="text-red-700">end date</label>
+              <input
+                className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
+                type="date"
+                value={endDate}
+                onChange={handleEndDateChange}
+              />
+            </div>
+
           </div>
           <div className="flex gap-8 item">
             <CustomButton
