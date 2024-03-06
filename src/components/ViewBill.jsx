@@ -30,7 +30,7 @@ export const ViewBill = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/api/search", {
+      const response = await axios.post(`${process.env.REACT_APP_URL}/api/search`, {
         companyName: searchQuery.toUpperCase(),
         startDate: startDate,
         endDate: endDate,
@@ -57,7 +57,7 @@ export const ViewBill = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/getAllData");
+      const response = await axios.get(`${process.env.REACT_APP_URL}/api/getAllData`);
       const data = response.data;
       if (data.success) {
         setSearchResults(data.data);
@@ -82,7 +82,7 @@ export const ViewBill = () => {
           fetchData={fetchData}
         />
       )}
-      <div className="flex justify-center  p-2 m-8 border border-gray-400 rounded-md shadow-md">
+      <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">
           <div>
             <div className="bg-[#F0F5FB] rounded-lg border items-center w-96 outline-none flex py-2 px-3">

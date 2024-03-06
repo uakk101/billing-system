@@ -118,7 +118,7 @@ const Billing = () => {
       date: inputValues.date,
     };
 
-    axios.post("http://localhost:3001/api/save", payload)
+    axios.post(`${process.env.REACT_APP_URL}/api/save`, payload)
       .then((response) => {
         console.log("Save successful:", response.data);
       })

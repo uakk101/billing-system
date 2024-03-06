@@ -40,7 +40,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3001/api/delete/${billId}`
+        `${process.env.REACT_APP_URL}/api/delete/${billId}`
       );
       const data = response.data;
       if (data.success) {
@@ -66,9 +66,9 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         className="p-2 mx-8 mb-4 border border-gray-400 rounded-md shadow-md"
       >
         <div className="flex items-center justify-between gap-4">
-          <div className="flex justify-between items-center gap-2">
+          <div className="flex items-center justify-between gap-2">
             <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Date: </span>{result.date}</h1>
-            <h1 className="text-red-600 font-semibold"><span className="font-semibold text-black">Technition: </span>{result.technition}</h1>
+            <h1 className="font-semibold text-red-600"><span className="font-semibold text-black">Technition: </span>{result.technition}</h1>
             <h1 className="text-[#0C7F80] text-sm "><span className="font-semibold text-black">Address: </span>{result.address}</h1>
           </div>
           <h1 className="text-[#0C7F80]  font-semibold">
@@ -137,8 +137,8 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                         {name === "miliDisk" && <td colSpan={3}>Mili Disk</td>}
                         {name === "angel" && <td colSpan={3}>Angel</td>}
                         {name === "topPlate" && <td colSpan={3}>Top Plate</td>}
-                        <td className="text-right pr-8" colSpan={1} >{quantity}</td>
-                        <td className="text-right pr-4" colSpan={1} >{price}</td>
+                        <td className="pr-8 text-right" colSpan={1} >{quantity}</td>
+                        <td className="pr-4 text-right" colSpan={1} >{price}</td>
                         <td className="text-center" colSpan={1}>{total}</td>
                       </tr>
                     );
@@ -146,8 +146,8 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                   return null;
                 })}
                 <tr className="border-t">
-                  <td colSpan={3} className="text-xl font-bold  text-right "> </td>
-                  <td colSpan={3} className="text-right text-xl font-bold text-red-800 pr-32">
+                  <td colSpan={3} className="text-xl font-bold text-right "> </td>
+                  <td colSpan={3} className="pr-32 text-xl font-bold text-right text-red-800">
                     {result.total}
                   </td>
                 </tr>

@@ -437,7 +437,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
         // setLoading(true);
         const response = await axios.post(
-          "http://localhost:3001/api/save",
+          `${process.env.REACT_APP_URL}/api/save`,
           payload,
           {
             headers: {
@@ -471,8 +471,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
       if (billID) {
         // setLoading(true);
         try {
-          const response = await axios.get(
-            `http://localhost:3001/api/getData/${billID}`,
+          const response = await axios.get( `${process.env.REACT_APP_URL}/api/getData/${billID}`,
             {
               // Data to update, if needed
             }
