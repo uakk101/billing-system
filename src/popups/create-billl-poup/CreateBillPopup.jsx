@@ -14,8 +14,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
     id: 0,
     companyName: "",
     date: "",
-    technition : "",
-    address : "",
+    technition: "",
+    address: "",
     total: "",
     mughalGarderQ: "",
     mughalGarderP: "",
@@ -99,8 +99,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   const [validationModel, setValidationModel] = useState({
     companyNameError: null,
     dateError: null,
-    technitionError : null,
-    addressError : null,
+    technitionError: null,
+    addressError: null,
     mughalGarderPError: null,
     mughalGarderQError: null,
     crossPipeQError: null,
@@ -362,7 +362,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         const updatedLocationModel = {
           ...locationModel,
           mughalGarderT: String(
-            Number(locationModel.mughalGarderQ) * Number(locationModel.mughalGarderP)
+            Number(locationModel.mughalGarderQ) *
+              Number(locationModel.mughalGarderP)
           ),
           crossPipeT: String(
             Number(locationModel.crossPipeQ) * Number(locationModel.crossPipeP)
@@ -446,14 +447,13 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
           }
         );
         const data = response.data;
-        if(flag === true){
+        if (flag === true) {
           onClose();
         }
-       
+
         if (data.success) {
-            toast.success("Data updated successfully");
-            fetchData();
-          
+          toast.success("Data updated successfully");
+          fetchData();
         } else {
           toast.error("Error saving data");
         }
@@ -471,7 +471,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
       if (billID) {
         // setLoading(true);
         try {
-          const response = await axios.get( `${process.env.REACT_APP_URL}/api/getData/${billID}`,
+          const response = await axios.get(
+            `${process.env.REACT_APP_URL}/api/getData/${billID}`,
             {
               // Data to update, if needed
             }
@@ -540,7 +541,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     {validationModel.dateError}
                   </div>
                   <div className="col-span-6 md:col-span-4 ">
-                  <CustomInput
+                    <CustomInput
                       name={"technition"}
                       value={locationModel.technition}
                       onChange={onhandleChange}
@@ -552,7 +553,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     {validationModel.technitionError}
                   </div>
                   <div className="col-span-12 md:col-span-12 ">
-                  <CustomInput
+                    <CustomInput
                       name={"address"}
                       value={locationModel.address}
                       onChange={onhandleChange}
@@ -594,7 +595,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"mughalGarderQ"}
                       value={locationModel.mughalGarderQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.mughalGarderQError}
@@ -604,15 +605,17 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"mughalGarderP"}
                       value={locationModel.mughalGarderP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.mughalGarderPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.mughalGarderQ *
-                        locationModel.mughalGarderP}
+                      {Number(
+                        locationModel.mughalGarderQ *
+                          locationModel.mughalGarderP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -626,7 +629,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"crossPipeQ"}
                       value={locationModel.crossPipeQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.crossPipeQError}
@@ -636,14 +639,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"crossPipeP"}
                       value={locationModel.crossPipeP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.crossPipePError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.crossPipeQ * locationModel.crossPipeP}
+                      {Number(
+                        locationModel.crossPipeQ * locationModel.crossPipeP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -657,7 +662,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"cChannelQ"}
                       value={locationModel.cChannelQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.cChannelQError}
@@ -667,14 +672,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"cChannelP"}
                       value={locationModel.cChannelP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.cChannelPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.cChannelQ * locationModel.cChannelP}
+                      {Number(
+                        locationModel.cChannelQ * locationModel.cChannelP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -688,7 +695,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"basePlateQ"}
                       value={locationModel.basePlateQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.basePlateQErrror}
@@ -698,14 +705,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"basePlateP"}
                       value={locationModel.basePlateP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.basePlatePErrror}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.basePlateQ * locationModel.basePlateP}
+                      {Number(
+                        locationModel.basePlateQ * locationModel.basePlateP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -719,7 +728,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"rawalBoltQ"}
                       value={locationModel.rawalBoltQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.rawalBoltQErrror}
@@ -729,14 +738,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"rawalBoltP"}
                       value={locationModel.rawalBoltP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.rawalBoltPErrror}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.rawalBoltQ * locationModel.rawalBoltP}
+                      {Number(
+                        locationModel.rawalBoltQ * locationModel.rawalBoltP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -750,7 +761,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"nutBoltQ"}
                       value={locationModel.nutBoltQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.nutBoltQErrror}
@@ -760,14 +771,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"nutBoltP"}
                       value={locationModel.nutBoltP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.nutBoltPErrror}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.nutBoltQ * locationModel.nutBoltP}
+                      {Number(
+                        locationModel.nutBoltQ * locationModel.nutBoltP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -781,7 +794,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"cutterDiskQ"}
                       value={locationModel.cutterDiskQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.cutterDiskQErrror}
@@ -791,14 +804,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"cutterDiskP"}
                       value={locationModel.cutterDiskP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.cutterDiskPErrror}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.cutterDiskQ * locationModel.cutterDiskP}
+                      {Number(
+                        locationModel.cutterDiskQ * locationModel.cutterDiskP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -812,7 +827,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"weldingRodQ"}
                       value={locationModel.weldingRodQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.weldingRodQError}
@@ -822,14 +837,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"weldingRodP"}
                       value={locationModel.weldingRodP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.weldingRodPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.weldingRodQ * locationModel.weldingRodP}
+                      {Number(
+                        locationModel.weldingRodQ * locationModel.weldingRodP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -843,7 +860,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"blackPaintQ"}
                       value={locationModel.blackPaintQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.blackPaintQError}
@@ -853,14 +870,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"blackPaintP"}
                       value={locationModel.blackPaintP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.blackPaintPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.blackPaintQ * locationModel.blackPaintP}
+                      {Number(
+                        locationModel.blackPaintQ * locationModel.blackPaintP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -874,7 +893,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"sprayPaintQ"}
                       value={locationModel.sprayPaintQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.sprayPaintQError}
@@ -884,14 +903,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"sprayPaintP"}
                       value={locationModel.sprayPaintP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.sprayPaintPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.sprayPaintQ * locationModel.sprayPaintP}
+                      {Number(
+                        locationModel.sprayPaintQ * locationModel.sprayPaintP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -905,7 +926,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"epoxyQ"}
                       value={locationModel.epoxyQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.epoxyQError}
@@ -915,14 +936,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"epoxyP"}
                       value={locationModel.epoxyP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.epoxyPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.epoxyQ * locationModel.epoxyP}
+                      {Number(
+                        locationModel.epoxyQ * locationModel.epoxyP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -936,7 +959,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"nakkyQ"}
                       value={locationModel.nakkyQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.nakkyQError}
@@ -946,14 +969,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"nakkyP"}
                       value={locationModel.nakkyP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.nakkyPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.nakkyQ * locationModel.nakkyP}
+                      {Number(
+                        locationModel.nakkyQ * locationModel.nakkyP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -967,7 +992,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"miliDiskQ"}
                       value={locationModel.miliDiskQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.miliDiskQError}
@@ -977,14 +1002,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"miliDiskP"}
                       value={locationModel.miliDiskP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.miliDiskPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.miliDiskQ * locationModel.miliDiskP}
+                      {Number(
+                        locationModel.miliDiskQ * locationModel.miliDiskP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -998,7 +1025,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"angelQ"}
                       value={locationModel.angelQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.angelQError}
@@ -1008,14 +1035,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"angelP"}
                       value={locationModel.angelP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.angelPError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.angelQ * locationModel.angelP}
+                      {Number(
+                        locationModel.angelQ * locationModel.angelP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1029,7 +1058,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"topPlateQ"}
                       value={locationModel.topPlateQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.topPlateQError}
@@ -1039,14 +1068,16 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"topPlateP"}
                       value={locationModel.topPlateP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.topPlatePError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.topPlateQ * locationModel.topPlateP}
+                      {Number(
+                        locationModel.topPlateQ * locationModel.topPlateP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1057,18 +1088,21 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   </div>
                   <div className="col-span-12 border-t-2 md:col-span-4">
                     <h1 className="text-2xl font-semibold text-green-700 text-end">
-                      {Object.keys(locationModel)
-                        .filter((k) => !k.endsWith("Q"))
-                        .reduce((accumulator, key) => {
-                          if (key.endsWith("P")) {
-                            accumulator +=
-                              (locationModel[key] || 0) *
-                              (locationModel[
-                                key.slice(0, key.length - 1) + "Q"
-                              ] || 0);
-                          }
-                          return accumulator;
-                        }, 0)}
+                      {Number(
+                        Object.keys(locationModel)
+                          .filter((k) => !k.endsWith("Q"))
+                          .reduce((accumulator, key) => {
+                            if (key.endsWith("P")) {
+                              accumulator +=
+                                (locationModel[key] || 0) *
+                                (locationModel[
+                                  key.slice(0, key.length - 1) + "Q"
+                                ] || 0);
+                            }
+                            return accumulator;
+                          }, 0)
+                          .toFixed(5)
+                      )}
                     </h1>
                   </div>
                   {/*  */}
@@ -1084,7 +1118,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"panelInstallStructureQ"}
                       value={locationModel.panelInstallStructureQ}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.panelInstallStructureQError}
@@ -1094,15 +1128,17 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"panelInstallStructureP"}
                       value={locationModel.panelInstallStructureP}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.panelInstallStructurePError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.panelInstallStructureQ *
-                        locationModel.panelInstallStructureP}
+                      {Number(
+                        locationModel.panelInstallStructureQ *
+                          locationModel.panelInstallStructureP
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   <div className="col-span-12 md:col-span-2">
@@ -1110,16 +1146,18 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       name={"panelInstallStructureG"}
                       value={locationModel.panelInstallStructureG}
                       onChange={onhandleChange}
-                      type="number"
+                      type="text"
                       required={true}
                     />
                     {validationModel.panelInstallStructureGError}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
-                      {locationModel.panelInstallStructureQ *
-                        locationModel.panelInstallStructureP *
-                        locationModel.panelInstallStructureG}
+                      {Number(
+                        locationModel.panelInstallStructureQ *
+                          locationModel.panelInstallStructureP *
+                          locationModel.panelInstallStructureG
+                      ).toFixed(4)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1136,14 +1174,15 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
                 <div className="flex justify-end px-4 py-4 border-t-2">
                   <CustomButton
-                     onClick={billID ? () => onAddBill(true) : () => onAddBill(false)}
+                    onClick={
+                      billID ? () => onAddBill(true) : () => onAddBill(false)
+                    }
                     text={billID ? "Update" : "Save"}
                   />
                   <button
                     onClick={onClose}
                     className="p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2"
                   >
-                    
                     Cancel
                   </button>
                   <button
