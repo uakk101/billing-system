@@ -68,6 +68,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center justify-between gap-2">
             <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Date: </span>{result.date}</h1>
+            <h1 className="font-semibold text-green-700"><span className="font-semibold text-black">Customer Name: </span>{result.customerName}</h1>
             <h1 className="font-semibold text-red-600"><span className="font-semibold text-black">Technition: </span>{result.technition}</h1>
             <h1 className="text-[#0C7F80] text-sm "><span className="font-semibold text-black">Address: </span>{result.address}</h1>
           </div>
@@ -167,11 +168,29 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
               <tbody>
                 <tr>
                   <td>PanelInstall Structure</td>
-                  <td>{result.panelInstallStructureQ}</td>
+                  <td>{result.panelInstallStructure1}</td>
                   <td>{result.panelInstallStructureP}</td>
                   <td>{result.panelInstallStructureST}</td>
                   <td>{result.panelInstallStructureG}</td>
                   <td className="text-xl font-bold text-green-600">{result.panelInstallStructureGT}</td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="w-full mb-4 text-sm">
+              <thead className="bg-[#F5F5F5]">
+                <tr className="text-base">
+                  <th className="text-left">Name</th>
+                  <th className="text-left">Reason</th>
+                  <th className="text-left"></th>
+                  <th className="text-left">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Other Expenses</td>
+                  <td>{result.reason}</td>
+                  <td> </td>
+                  <td className="text-xl font-bold text-green-600">{result.otherExpenses}</td>
                 </tr>
               </tbody>
             </table>
@@ -186,7 +205,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
   return (
     <div>
       {newBillPopup && (
-        <CreateBillPopup onClose={onClosePopup} billID={billId} />
+        <CreateBillPopup fetchData={fetchData} onClose={onClosePopup} billID={billId} />
       )}
       {newDeletePopup && (
         <ConfirmationPopup

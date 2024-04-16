@@ -97,8 +97,7 @@ export const ViewBill = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            {/* <CustomInput type="date" value={selectedDate} onChange={handleDateChange} /> */}
-
+    
             <h1 className="text-red-700" htmlFor="">start date</h1>
             <input
               className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"

@@ -10,13 +10,19 @@ import Validator, {
 import { ErrorHandlingMessage } from "../../Utils/ErrorHandlingMessage";
 
 const CreateBillPopup = ({ onClose, billID, fetchData }) => {
+
   const [locationModel, setLocationModel] = useState({
     id: 0,
     companyName: "",
     date: "",
     technition: "",
+    customerName: "",
     address: "",
     total: "",
+
+    reason: "",
+    otherExpenses: "",
+
     mughalGarderQ: "",
     mughalGarderP: "",
     mughalGarderT: "",
@@ -77,7 +83,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
     topPlateP: "",
     topPlateT: "",
 
-    panelInstallStructureQ: "",
+    panelInstallStructure1: "",
     panelInstallStructureP: "",
     panelInstallStructureG: "",
     panelInstallStructureST: "",
@@ -98,6 +104,9 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   // Validation Types
   const [validationModel, setValidationModel] = useState({
     companyNameError: null,
+    customerNameError: null,
+    reasonError: null,
+    otherExpensesError: null,
     dateError: null,
     technitionError: null,
     addressError: null,
@@ -131,7 +140,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
     angelPError: null,
     topPlateQError: null,
     topPlatePError: null,
-    panelInstallStructureQError: null,
+    panelInstallStructure1Error: null,
     panelInstallStructurePError: null,
     panelInstallStructureGError: null,
   });
@@ -144,15 +153,30 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         [V_Type.required],
         ["Company Name is required"]
       ),
+      reasonError: Validator(
+        locationModel.reason,
+        [V_Type.required],
+        ["Reason is required"]
+      ),
+      otherExpensesError: Validator(
+        locationModel.otherExpenses,
+        [V_Type.required],
+        ["Other Expenses is required"]
+      ),
       technitionError: Validator(
         locationModel.technition,
         [V_Type.required],
-        ["technition Name is required"]
+        ["Technition Name is required"]
       ),
       addressError: Validator(
         locationModel.address,
         [V_Type.required],
         ["address is required"]
+      ),
+      customerNameError: Validator(
+        locationModel.customerName,
+        [V_Type.required],
+        ["Customer Name Error is required"]
       ),
       dateError: Validator(
         locationModel.date,
@@ -309,8 +333,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         [V_Type.required],
         ["it is required"]
       ),
-      panelInstallStructureQError: Validator(
-        locationModel.panelInstallStructureQ,
+      panelInstallStructure1Error: Validator(
+        locationModel.panelInstallStructure1,
         [V_Type.required],
         ["it is required"]
       ),
@@ -361,64 +385,97 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         // Calculate the T values
         const updatedLocationModel = {
           ...locationModel,
+          mughalGarderQ: Number(locationModel.mughalGarderQ).toFixed(2),
+          mughalGarderP: Number(locationModel.mughalGarderP).toFixed(2),
           mughalGarderT: String(
-            Number(locationModel.mughalGarderQ) *
-              Number(locationModel.mughalGarderP)
+            (Number(locationModel.mughalGarderQ) *
+              Number(locationModel.mughalGarderP)).toFixed(2)
           ),
+          crossPipeQ: Number(locationModel.crossPipeQ).toFixed(2),
+          crossPipeP: Number(locationModel.crossPipeP).toFixed(2),
           crossPipeT: String(
-            Number(locationModel.crossPipeQ) * Number(locationModel.crossPipeP)
+            (Number(locationModel.crossPipeQ) * Number(locationModel.crossPipeP)).toFixed(2)
           ),
+          cChannelQ: Number(locationModel.cChannelQ).toFixed(2),
+          cChannelP: Number(locationModel.cChannelP).toFixed(2),
           cChannelT: String(
-            Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)
+            (Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)).toFixed(2)
           ),
+          basePlateQ: Number(locationModel.basePlateQ).toFixed(2),
+          basePlateP: Number(locationModel.basePlateP).toFixed(2),
           basePlateT: String(
-            Number(locationModel.basePlateQ) * Number(locationModel.basePlateP)
+            (Number(locationModel.basePlateQ) * Number(locationModel.basePlateP)).toFixed(2)
           ),
+          rawalBoltQ: Number(locationModel.rawalBoltP).toFixed(2),
+          rawalBoltP: Number(locationModel.rawalBoltP).toFixed(2),
           rawalBoltT: String(
-            Number(locationModel.rawalBoltQ) * Number(locationModel.rawalBoltP)
+            (Number(locationModel.rawalBoltQ) * Number(locationModel.rawalBoltP)).toFixed(2)
           ),
+          nutBoltQ: Number(locationModel.nutBoltQ).toFixed(2),
+          nutBoltP: Number(locationModel.nutBoltP).toFixed(2),
           nutBoltT: String(
-            Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)
+            (Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)).toFixed(2)
           ),
+          cutterDiskQ: Number(locationModel.cutterDiskQ).toFixed(2),
+          cutterDiskP: Number(locationModel.cutterDiskP).toFixed(2),
           cutterDiskT: String(
-            Number(locationModel.cutterDiskQ) *
-              Number(locationModel.cutterDiskP)
+            (Number(locationModel.cutterDiskQ) *
+              Number(locationModel.cutterDiskP)).toFixed(2)
           ),
+          weldingRodQ: Number(locationModel.weldingRodQ).toFixed(2),
+          weldingRodP: Number(locationModel.weldingRodP).toFixed(2),
           weldingRodT: String(
-            Number(locationModel.weldingRodQ) *
-              Number(locationModel.weldingRodP)
+            (Number(locationModel.weldingRodQ) *
+              Number(locationModel.weldingRodP)).toFixed(2)
           ),
+          blackPaintQ: Number(locationModel.blackPaintQ).toFixed(2),
+          blackPaintP: Number(locationModel.blackPaintP).toFixed(2),
           blackPaintT: String(
-            Number(locationModel.blackPaintQ) *
-              Number(locationModel.blackPaintP)
+            (Number(locationModel.blackPaintQ) *
+              Number(locationModel.blackPaintP)).toFixed(2)
           ),
+          sprayPaintQ: Number(locationModel.sprayPaintQ).toFixed(2),
+          sprayPaintP: Number(locationModel.sprayPaintP).toFixed(2),
           sprayPaintT: String(
-            Number(locationModel.sprayPaintQ) *
-              Number(locationModel.sprayPaintP)
+            (Number(locationModel.sprayPaintQ) *
+              Number(locationModel.sprayPaintP)).toFixed(2)
           ),
+          epoxyQ: Number(locationModel.epoxyQ).toFixed(2),
+          epoxyP: Number(locationModel.epoxyP).toFixed(2),
           epoxyT: String(
-            Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)
+            (Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)).toFixed(2)
           ),
+          nakkyQ: Number(locationModel.nakkyQ).toFixed(2),
+          nakkyP: Number(locationModel.nakkyP).toFixed(2),
           nakkyT: String(
-            Number(locationModel.nakkyQ) * Number(locationModel.nakkyP)
+            (Number(locationModel.nakkyQ) * Number(locationModel.nakkyP)).toFixed(2)
           ),
+          miliDiskQ: Number(locationModel.miliDiskQ).toFixed(2),
+          miliDiskP: Number(locationModel.miliDiskP).toFixed(2),
           miliDiskT: String(
-            Number(locationModel.miliDiskQ) * Number(locationModel.miliDiskP)
+            (Number(locationModel.miliDiskQ) * Number(locationModel.miliDiskP)).toFixed(2)
           ),
+          angelQ: Number(locationModel.angelQ).toFixed(2),
+          angelP: Number(locationModel.angelP).toFixed(2),
           angelT: String(
-            Number(locationModel.angelQ) * Number(locationModel.angelP)
+            (Number(locationModel.angelQ) * Number(locationModel.angelP)).toFixed(2)
           ),
+          topPlateQ: Number(locationModel.topPlateQ).toFixed(2),
+          topPlateP: Number(locationModel.topPlateP).toFixed(2),
           topPlateT: String(
-            Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)
+            (Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)).toFixed(2)
           ),
+          panelInstallStructure1: Number(locationModel.panelInstallStructure1).toFixed(2),
+          panelInstallStructureP: Number(locationModel.panelInstallStructureP).toFixed(2),
+          panelInstallStructureG: Number(locationModel.panelInstallStructureG).toFixed(2),
           panelInstallStructureST: String(
-            Number(locationModel.panelInstallStructureQ) *
-              Number(locationModel.panelInstallStructureP)
+            (Number(locationModel.panelInstallStructure1) *
+              Number(locationModel.panelInstallStructureP)).toFixed(2)
           ),
           panelInstallStructureGT: String(
-            Number(locationModel.panelInstallStructureQ) *
+            (Number(locationModel.panelInstallStructure1) *
               Number(locationModel.panelInstallStructureP) *
-              Number(locationModel.panelInstallStructureG)
+              Number(locationModel.panelInstallStructureG)).toFixed(2)
           ),
           total: Object.keys(locationModel)
             .filter((k) => !k.endsWith("Q"))
@@ -429,7 +486,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   (locationModel[key.slice(0, key.length - 1) + "Q"] || 0);
               }
               return accumulator;
-            }, 0),
+            }, 0).toFixed(2),
         };
 
         const payload = {
@@ -447,16 +504,25 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
           }
         );
         const data = response.data;
-        if (flag === true) {
-          onClose();
-        }
-
         if (data.success) {
-          toast.success("Data updated successfully");
-          fetchData();
-        } else {
+          if(flag === true){
+            onClose();
+            fetchData();
+          }else{
+            clearFields();
+            fetchData();
+          }
+          toast.success("Data saved successfully");
+        }else{
           toast.error("Error saving data");
         }
+
+        // if (data.success && flag === false) {
+        //   toast.success("Data saved successfully");
+          
+        // } else {
+        //   toast.error("Error saving data");
+        // }
 
         // setLoading(false);
       } catch (error) {
@@ -467,7 +533,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       if (billID) {
         // setLoading(true);
         try {
@@ -486,7 +552,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         }
       }
     };
-    fetchData();
+    getData();
   }, [billID]);
 
   return (
@@ -517,7 +583,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                 {/* 
                  <div  className='rtl-container'> */}
                 <div className="grid grid-cols-12 gap-4 px-4 py-4 ">
-                  <div className="col-span-6 md:col-span-4">
+                  <div className="col-span-6 md:col-span-3">
                     <CustomInput
                       name={"companyName"}
                       value={locationModel.companyName}
@@ -529,18 +595,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     />
                     {validationModel.companyNameError}
                   </div>
-                  <div className="col-span-6 md:col-span-4 ">
-                    <CustomInput
-                      name={"date"}
-                      value={locationModel.date}
-                      onChange={onhandleChange}
-                      label="Date"
-                      type="date"
-                      required={true}
-                    />
-                    {validationModel.dateError}
-                  </div>
-                  <div className="col-span-6 md:col-span-4 ">
+                  <div className="col-span-6 md:col-span-3 ">
                     <CustomInput
                       name={"technition"}
                       value={locationModel.technition}
@@ -551,6 +606,29 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       required={true}
                     />
                     {validationModel.technitionError}
+                  </div>
+                  <div className="col-span-6 md:col-span-3 ">
+                    <CustomInput
+                      name={"customerName"}
+                      value={locationModel.customerName}
+                      onChange={onhandleChange}
+                      label="Customer Name"
+                      type="text"
+                      placeholder=""
+                      required={true}
+                    />
+                    {validationModel.technitionError}
+                  </div>
+                  <div className="col-span-6 md:col-span-3 ">
+                    <CustomInput
+                      name={"date"}
+                      value={locationModel.date}
+                      onChange={onhandleChange}
+                      label="Date"
+                      type="date"
+                      required={true}
+                    />
+                    {validationModel.dateError}
                   </div>
                   <div className="col-span-12 md:col-span-12 ">
                     <CustomInput
@@ -614,8 +692,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.mughalGarderQ *
-                          locationModel.mughalGarderP
-                      ).toFixed(4)}
+                        locationModel.mughalGarderP
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -648,7 +726,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.crossPipeQ * locationModel.crossPipeP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -681,7 +759,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.cChannelQ * locationModel.cChannelP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -714,7 +792,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.basePlateQ * locationModel.basePlateP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -747,7 +825,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.rawalBoltQ * locationModel.rawalBoltP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -780,7 +858,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.nutBoltQ * locationModel.nutBoltP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -813,7 +891,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.cutterDiskQ * locationModel.cutterDiskP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -846,7 +924,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.weldingRodQ * locationModel.weldingRodP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -879,7 +957,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.blackPaintQ * locationModel.blackPaintP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -912,7 +990,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.sprayPaintQ * locationModel.sprayPaintP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -945,7 +1023,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.epoxyQ * locationModel.epoxyP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -978,7 +1056,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.nakkyQ * locationModel.nakkyP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1011,7 +1089,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.miliDiskQ * locationModel.miliDiskP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1044,7 +1122,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.angelQ * locationModel.angelP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1077,7 +1155,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.topPlateQ * locationModel.topPlateP
-                      ).toFixed(4)}
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
@@ -1087,7 +1165,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="text-2xl font-semibold text-end">TOTAL</h1>
                   </div>
                   <div className="col-span-12 border-t-2 md:col-span-4">
-                    <h1 className="text-2xl font-semibold text-green-700 text-end">
+                    <h1 className="text-2xl font-semibold text-red-700 text-end">
                       {Number(
                         Object.keys(locationModel)
                           .filter((k) => !k.endsWith("Q"))
@@ -1101,9 +1179,9 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                             }
                             return accumulator;
                           }, 0)
-                          .toFixed(5)
-                      )}
+                      ).toFixed(2)}
                     </h1>
+
                   </div>
                   {/*  */}
 
@@ -1115,13 +1193,13 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <CustomInput
-                      name={"panelInstallStructureQ"}
-                      value={locationModel.panelInstallStructureQ}
+                      name={"panelInstallStructure1"}
+                      value={locationModel.panelInstallStructure1}
                       onChange={onhandleChange}
                       type="text"
                       required={true}
                     />
-                    {validationModel.panelInstallStructureQError}
+                    {validationModel.panelInstallStructure1Error}
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <CustomInput
@@ -1136,9 +1214,9 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   <div className="col-span-12 md:col-span-2">
                     <h1 className="mt-2 text-end">
                       {Number(
-                        locationModel.panelInstallStructureQ *
-                          locationModel.panelInstallStructureP
-                      ).toFixed(4)}
+                        locationModel.panelInstallStructure1 *
+                        locationModel.panelInstallStructureP
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   <div className="col-span-12 md:col-span-2">
@@ -1151,25 +1229,45 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     />
                     {validationModel.panelInstallStructureGError}
                   </div>
+
                   <div className="col-span-12 md:col-span-2">
-                    <h1 className="mt-2 text-end">
+                    <h1 className="mt-2 text-2xl text-green-700 text-end ">
                       {Number(
-                        locationModel.panelInstallStructureQ *
-                          locationModel.panelInstallStructureP *
-                          locationModel.panelInstallStructureG
-                      ).toFixed(4)}
+                        locationModel.panelInstallStructure1 *
+                        locationModel.panelInstallStructureP *
+                        locationModel.panelInstallStructureG +
+                        (locationModel.otherExpenses ? parseFloat(locationModel.otherExpenses) : 0)
+                      ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
 
-                  {/*  */}
-                  {/* <div className="col-span-12 border-t-2 md:col-span-8">
-                                        <h1 className='text-2xl font-semibold text-end'>Grand Total</h1>
-                                    </div>
-                                    <div className="col-span-12 border-t-2 md:col-span-4">
-                                        <h1 className='text-2xl font-semibold text-green-700 text-end'>{ }</h1>
-                                    </div> */}
-                  {/*  */}
+                  <div className="col-span-12 md:col-span-2">
+                    <h1 className="mt-2 text-center">
+                      Other Expenses
+                    </h1>
+                  </div>
+                  <div className="col-span-12 md:col-span-2">
+                    <CustomInput
+                      name={"otherExpenses"}
+                      value={locationModel.otherExpenses}
+                      onChange={onhandleChange}
+                      type="text"
+                      required={true}
+                    />
+                    {validationModel.otherExpensesError}
+                  </div>
+                  <div className="col-span-12 md:col-span-8">
+                    <CustomInput
+                      name={"reason"}
+                      value={locationModel.reason}
+                      onChange={onhandleChange}
+                      placeholder={"Reason"}
+                      type="text"
+                      required={true}
+                    />
+                    {validationModel.reasonError}
+                  </div>
                 </div>
 
                 <div className="flex justify-end px-4 py-4 border-t-2">
