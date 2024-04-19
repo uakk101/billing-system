@@ -4,7 +4,9 @@ import CustomButton from "../common/CustomButton";
 import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
 import ConfirmationPopup from "../popups/ConfirmationPopup/ConfirmationPopup";
 import axios from "axios";
+
 import { toast } from "react-toastify";
+ 
 
 export const ViewBillGrid = ({ searchResults, fetchData }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
@@ -18,6 +20,7 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
+ 
   const onOpenPopup = (id) => {
     setBillId(id);
     setNewBillPopup(true);
@@ -37,6 +40,25 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
     setDeletePopup(false);
   };
 
+
+  const handleDownloadPDF = async (id) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_URL}/api/downloadPDF/${id}`,
+        { responseType: "blob" }
+      );
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `billing_${id}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
@@ -59,29 +81,40 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
 
   const renderGrid = () => {
     if (!searchResults) return null;
-
-    return searchResults.map((result, index) => (
+    const sortedResults = searchResults.slice().sort((a, b) => a.billNo - b.billNo);
+    return sortedResults.map((result, index) => (
       <div
         key={index}
+        id={`billGrid-${index}`}
         className="p-2 mx-8 mb-4 border border-gray-400 rounded-md shadow-md"
       >
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center justify-between gap-2">
+            <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Bill No: </span>{result.billNo}</h1>
             <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Date: </span>{result.date}</h1>
             <h1 className="font-semibold text-green-700"><span className="font-semibold text-black">Customer Name: </span>{result.customerName}</h1>
             <h1 className="font-semibold text-red-600"><span className="font-semibold text-black">Technition: </span>{result.technition}</h1>
-            <h1 className="text-[#0C7F80] text-sm "><span className="font-semibold text-black">Address: </span>{result.address}</h1>
+            <h1 className="text-[#0C7F80] text-sm truncate overflow-hidden whitespace-nowrap w-[300px]">
+              <span className="font-semibold text-black">Address: </span>
+              {result.address}
+            </h1>
           </div>
           <h1 className="text-[#0C7F80]  font-semibold">
             {result.companyName}
           </h1>
 
           <div className="flex items-center gap-2">
+          <CustomButton
+              onClick={() => handleDownloadPDF(result._id)}
+              type={"primary"}
+              text={"Download PDF"}
+            />
             <CustomButton
               onClick={() => onOpenPopup(result._id)}
               type={"outline"}
               text={"Update"}
             />
+            
             <CustomButton
               onClick={() => openDeletePopup(result._id)}
               type={"delete"}

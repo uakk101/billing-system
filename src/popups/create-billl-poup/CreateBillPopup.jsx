@@ -13,6 +13,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
   const [locationModel, setLocationModel] = useState({
     id: 0,
+    billNo : "",
     companyName: "",
     date: "",
     technition: "",
@@ -104,6 +105,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   // Validation Types
   const [validationModel, setValidationModel] = useState({
     companyNameError: null,
+    billNoError:null,
     customerNameError: null,
     reasonError: null,
     otherExpensesError: null,
@@ -148,8 +150,13 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   const setValidation = () => {
     let validation_Obj = {
       ...validationModel,
-      companyNameError: Validator(
+      billNoError: Validator(
         locationModel.companyName,
+        [V_Type.required],
+        ["Bill No is required"]
+      ),
+      companyNameError: Validator(
+        locationModel.billNo,
         [V_Type.required],
         ["Company Name is required"]
       ),
@@ -573,6 +580,18 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   <h2 className="text-xl font-semibold">
                     {billID ? "Update Bill" : "Add Bill"}
                   </h2>
+                   <div className="col-span-6 md:col-span-3">
+                    <CustomInput
+                      name={"billNo"}
+                      value={locationModel.billNo}
+                      onChange={onhandleChange}
+                      label="Bill No"
+                      type="number"
+                      placeholder=""
+                      required={true}
+                    />
+                     {validationModel.billNoError}
+                  </div>
                   <button
                     onClick={onClose}
                     className="p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2"
