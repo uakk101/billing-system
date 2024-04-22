@@ -16,6 +16,7 @@ export const ViewBill = () => {
 
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [profit, setProfit] = useState({
     totalAmount: 0,
     totalPanelStructureGT: 0,
@@ -28,35 +29,61 @@ export const ViewBill = () => {
       [name]: value,
     }));
   };
-
   const handleSearch = () => {
-    // Destructure searchQuery to ensure we're using the latest state
     const { companyName, technition, startDate, endDate } = searchQuery;
-
-    axios
-      .post(`${process.env.REACT_APP_URL}/api/search`, {
-        companyName: companyName.toUpperCase(),
-        technition: technition.toUpperCase(),
-        startDate,
-        endDate,
+  
+    // Check if all search fields are empty
+    const isEmptySearch = Object.values(searchQuery).every(value => value === "");
+  
+    // Check if only one of the dates is provided
+    const isStartDateMissing = !startDate && endDate;
+    const isEndDateMissing = startDate && !endDate;
+  
+    if (isEmptySearch) {
+      // If all search fields are empty, fetch all data
+      setProfit({
+        totalAmount: 0,
+        totalPanelStructureGT: 0,
       })
-      .then((response) => {
-        const data = response.data;
-        if (data.success) {
-          setSearchResults(data.data);
-          setProfit({
-            totalAmount: data.totalAmount,
-            totalPanelStructureGT: data.totalPanelStructureGT,
-          });
-        } else {
-          console.error("Error searching data:", data.message);
-        }
-      })
-      .catch((error) => {
-        toast.error("Data not found");
-        console.error("Error searching data:", error);
-      });
+      fetchData();
+    } else if (isStartDateMissing) {
+      // If only start date is missing
+      toast.error("Start date is required.");
+    } else if (isEndDateMissing) {
+      // If only end date is missing
+      toast.error("End date is required.");
+    } else {
+      // Otherwise, proceed with searching
+      setIsLoading(true);
+      axios
+        .post(`${process.env.REACT_APP_URL}/api/search`, {
+          companyName: companyName.toUpperCase(),
+          technition: technition.toUpperCase(),
+          startDate,
+          endDate,
+        })
+        .then((response) => {
+          const data = response.data;
+          if (data.success) {
+            setSearchResults(data.data);
+            setProfit({
+              totalAmount: data.totalAmount,
+              totalPanelStructureGT: data.totalPanelStructureGT,
+            });
+           
+          } else {
+            console.error("Error searching data:", data.message);
+          }
+        })
+        .catch((error) => {
+          toast.error("Data not found");
+          console.error("Error searching data:", error);
+        }).finally(() => {
+          setIsLoading(false); // Reset loading state
+        });
+    }
   };
+  
 
   const onClosePopup = (e, isSaved) => {
     setNewBillPopup(false);
@@ -67,6 +94,7 @@ export const ViewBill = () => {
   };
 
   const fetchData = async () => {
+    setIsLoading(true); // Set loading state
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_URL}/api/getAllData`
@@ -79,6 +107,8 @@ export const ViewBill = () => {
       }
     } catch (error) {
       console.error("Error retrieving all data:", error);
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
   useEffect(() => {
@@ -88,6 +118,11 @@ export const ViewBill = () => {
 
   return (
     <div>
+       {isLoading && (
+        <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-200 bg-opacity-50">
+          <p className="text-lg font-semibold">Loading...</p>
+        </div>
+      )}
       {newBillPopup && (
         <CreateBillPopup
           onClose={onClosePopup}
