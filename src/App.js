@@ -54,7 +54,7 @@ function App() {
 
   const handleLogin = (password) => {
     // Check if the password is correct
-    if (password === "37102") {
+    if (password === "37403") {
       setLoggedIn(true);
     } else {
       toast.error("Incorrect password. Please try again.");
