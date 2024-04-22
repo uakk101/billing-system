@@ -595,7 +595,6 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
           );
           // setLoading(false);
           setLocationModel(response.data.data);
-          console.log("response", response);
         } catch (error) {
           // setLoading(false);
           // setError(error.message || 'An error occurred');

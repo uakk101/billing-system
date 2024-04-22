@@ -1,7 +1,6 @@
 import { toast } from "react-toastify"
 
 export const ErrorHandlingMessage = (error) => {
-    console.log("ErrorHandlingMessage", error.response);
 
     if (error.response) {
         if (error.response.data.errors) {

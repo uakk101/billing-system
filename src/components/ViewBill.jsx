@@ -41,10 +41,7 @@ export const ViewBill = () => {
   
     if (isEmptySearch) {
       // If all search fields are empty, fetch all data
-      setProfit({
-        totalAmount: 0,
-        totalPanelStructureGT: 0,
-      })
+      
       fetchData();
     } else if (isStartDateMissing) {
       // If only start date is missing
@@ -95,6 +92,10 @@ export const ViewBill = () => {
 
   const fetchData = async () => {
     setIsLoading(true); // Set loading state
+    setProfit({
+      totalAmount: 0,
+      totalPanelStructureGT: 0,
+    })
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_URL}/api/getAllData`
@@ -112,7 +113,7 @@ export const ViewBill = () => {
     }
   };
   useEffect(() => {
-    // console.log("featch data");
+ 
     fetchData();
   }, []);
 

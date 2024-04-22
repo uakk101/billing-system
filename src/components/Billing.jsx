@@ -93,7 +93,7 @@ const Billing = () => {
 
 
   const handleSave = () => {
-    console.log("date", inputValues.date);
+    
     const items = data.map((item) => ({
       name: item,
       quantity: parseFloat(inputValues[`${item}_1`] || 0),
@@ -120,10 +120,10 @@ const Billing = () => {
 
     axios.post(`${process.env.REACT_APP_URL}/api/save`, payload)
       .then((response) => {
-        console.log("Save successful:", response.data);
+ 
       })
       .catch((error) => {
-        console.error("Error saving data:", error);
+ 
       });
   };
 

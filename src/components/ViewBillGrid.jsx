@@ -41,7 +41,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   };
 
   const closeDeletePopup = (e, isSaved) => {
-    // console.log("This is deleted")
+ 
     // fetchData();
     setDeletePopup(false);
   };
@@ -71,7 +71,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
       );
       const data = response.data;
       if (data.success) {
-        console.log("Successfully deleted data:", data.message);
+ 
         toast.success("Deleted Successfully");
         fetchData();
         // Handle any additional logic or UI updates after successful deletion
@@ -310,15 +310,15 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
         />
       )}
       <div className="flex justify-end gap-4 mr-8">
-        <h1 className="font-bold text-xl">
+        <h1 className="text-xl font-bold">
           Total Site Expense :
-          <span className="text-red-700 font-bold text-xl">
+          <span className="text-xl font-bold text-red-700">
             {profit.totalAmount}
           </span>
         </h1>
-        <h1 className="font-bold text-xl">
+        <h1 className="text-xl font-bold">
           Total Site Income :
-          <span className="text-green-700 font-bold text-xl">
+          <span className="text-xl font-bold text-green-700">
             {profit.totalPanelStructureGT}
           </span>
         </h1>
