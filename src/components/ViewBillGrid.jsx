@@ -6,9 +6,8 @@ import ConfirmationPopup from "../popups/ConfirmationPopup/ConfirmationPopup";
 import axios from "axios";
 
 import { toast } from "react-toastify";
- 
 
-export const ViewBillGrid = ({ searchResults, fetchData }) => {
+export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [newDeletePopup, setDeletePopup] = useState(false);
@@ -20,7 +19,6 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
- 
   const onOpenPopup = (id) => {
     setBillId(id);
     setNewBillPopup(true);
@@ -34,12 +32,19 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
     setDeletePopup(true);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   const closeDeletePopup = (e, isSaved) => {
     // console.log("This is deleted")
     // fetchData();
     setDeletePopup(false);
   };
-
 
   const handleDownloadPDF = async (id) => {
     try {
@@ -81,7 +86,10 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
 
   const renderGrid = () => {
     if (!searchResults) return null;
-    const sortedResults = searchResults.slice().sort((a, b) => a.billNo - b.billNo);
+    const sortedResults = searchResults
+      .slice()
+      .sort((a, b) => a.billNo - b.billNo);
+
     return sortedResults.map((result, index) => (
       <div
         key={index}
@@ -90,10 +98,22 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
       >
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center justify-between gap-2">
-            <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Bill No: </span>{result.billNo}</h1>
-            <h1 className="text-[#0C7F80] font-semibold"><span className="font-semibold text-black">Date: </span>{result.date}</h1>
-            <h1 className="font-semibold text-green-700"><span className="font-semibold text-black">Customer Name: </span>{result.customerName}</h1>
-            <h1 className="font-semibold text-red-600"><span className="font-semibold text-black">Technition: </span>{result.technition}</h1>
+            <h1 className="text-[#0C7F80] font-semibold">
+              <span className="font-semibold text-black">Bill No: </span>
+              {result.billNo}
+            </h1>
+            <h1 className="text-[#0C7F80] font-semibold">
+              <span className="font-semibold text-black">Date: </span>
+              {formatDate(result.date)}
+            </h1>
+            <h1 className="font-semibold text-green-700">
+              <span className="font-semibold text-black">Customer Name: </span>
+              {result.customerName}
+            </h1>
+            <h1 className="font-semibold text-red-600">
+              <span className="font-semibold text-black">Technition: </span>
+              {result.technition}
+            </h1>
             <h1 className="text-[#0C7F80] text-sm truncate overflow-hidden whitespace-nowrap w-[300px]">
               <span className="font-semibold text-black">Address: </span>
               {result.address}
@@ -104,20 +124,20 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
           </h1>
 
           <div className="flex items-center gap-2">
-          <CustomButton
+            <CustomButton
               onClick={() => handleDownloadPDF(result._id)}
-              type={"primary"}
-              text={"Download PDF"}
+              type={"secondary"}
+              text={"Download"}
             />
             <CustomButton
               onClick={() => onOpenPopup(result._id)}
               type={"outline"}
               text={"Update"}
             />
-            
+
             <CustomButton
               onClick={() => openDeletePopup(result._id)}
-              type={"delete"}
+              type={"primary"}
               text={"Delete"}
             />
             {activeAccordion === index ? (
@@ -135,15 +155,25 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
         </div>
         {activeAccordion === index ? (
           <div
-            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? " h-[475px]" : ""}`}
+            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${
+              activeAccordion === index ? " h-[475px]" : ""
+            }`}
           >
             <table className="w-full text-sm">
               <thead className="bg-[#F5F5F5] w-full">
                 <tr className="text-lg ">
-                  <th colSpan={3} className="text-left">Name</th>
-                  <th colSpan={1} className="text-right ">Quantity</th>
-                  <th colSpan={1} className="text-right ">Price</th>
-                  <th colSpan={1} className="text-center">Total</th>
+                  <th colSpan={3} className="text-left">
+                    Name
+                  </th>
+                  <th colSpan={1} className="text-right ">
+                    Quantity
+                  </th>
+                  <th colSpan={1} className="text-right ">
+                    Price
+                  </th>
+                  <th colSpan={1} className="text-center">
+                    Total
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -156,32 +186,57 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
 
                     return (
                       <tr key={index}>
-                        {name === "mughalGarder" && <td colSpan={3}>Mughal Garder</td>}
-                        {name === "crossPipe" && <td colSpan={3}>Cross Pipe</td>}
+                        {name === "mughalGarder" && (
+                          <td colSpan={3}>Mughal Garder</td>
+                        )}
+                        {name === "crossPipe" && (
+                          <td colSpan={3}>Cross Pipe</td>
+                        )}
                         {name === "cChannel" && <td colSpan={3}>C Channel</td>}
-                        {name === "basePlate" && <td colSpan={3}>Base Plate</td>}
+                        {name === "basePlate" && (
+                          <td colSpan={3}>Base Plate</td>
+                        )}
                         {name === "rawalBolt" && <td colSpan={3}>Rawal Bol</td>}
                         {name === "nutBolt" && <td colSpan={3}>Nut Bolt</td>}
-                        {name === "cutterDisk" && <td colSpan={3}>Cutter Disk</td>}
-                        {name === "weldingRod" && <td colSpan={3}>Welding Rod</td>}
-                        {name === "blackPaint" && <td colSpan={3}>Black Paint</td>}
-                        {name === "sprayPaint" && <td colSpan={3}>Spray Paint</td>}
+                        {name === "cutterDisk" && (
+                          <td colSpan={3}>Cutter Disk</td>
+                        )}
+                        {name === "weldingRod" && (
+                          <td colSpan={3}>Welding Rod</td>
+                        )}
+                        {name === "blackPaint" && (
+                          <td colSpan={3}>Black Paint</td>
+                        )}
+                        {name === "sprayPaint" && (
+                          <td colSpan={3}>Spray Paint</td>
+                        )}
                         {name === "epoxy" && <td colSpan={3}>Epoxy</td>}
                         {name === "nakky" && <td colSpan={3}>Nakky</td>}
                         {name === "miliDisk" && <td colSpan={3}>Mili Disk</td>}
                         {name === "angel" && <td colSpan={3}>Angel</td>}
                         {name === "topPlate" && <td colSpan={3}>Top Plate</td>}
-                        <td className="pr-8 text-right" colSpan={1} >{quantity}</td>
-                        <td className="pr-4 text-right" colSpan={1} >{price}</td>
-                        <td className="text-center" colSpan={1}>{total}</td>
+                        <td className="pr-8 text-right" colSpan={1}>
+                          {quantity}
+                        </td>
+                        <td className="pr-4 text-right" colSpan={1}>
+                          {price}
+                        </td>
+                        <td className="text-center" colSpan={1}>
+                          {total}
+                        </td>
                       </tr>
                     );
                   }
                   return null;
                 })}
                 <tr className="border-t">
-                  <td colSpan={3} className="text-xl font-bold text-right "> </td>
-                  <td colSpan={3} className="pr-32 text-xl font-bold text-right text-red-800">
+                  <td colSpan={3} className="text-xl font-bold text-right ">
+                    {" "}
+                  </td>
+                  <td
+                    colSpan={3}
+                    className="pr-32 text-xl font-bold text-right text-red-800"
+                  >
                     {result.total}
                   </td>
                 </tr>
@@ -205,7 +260,9 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                   <td>{result.panelInstallStructureP}</td>
                   <td>{result.panelInstallStructureST}</td>
                   <td>{result.panelInstallStructureG}</td>
-                  <td className="text-xl font-bold text-green-600">{result.panelInstallStructureGT}</td>
+                  <td className="text-xl font-bold text-green-600">
+                    {result.panelInstallStructureGT}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -223,7 +280,9 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
                   <td>Other Expenses</td>
                   <td>{result.reason}</td>
                   <td> </td>
-                  <td className="text-xl font-bold text-green-600">{result.otherExpenses}</td>
+                  <td className="text-xl font-bold text-green-600">
+                    {result.otherExpenses}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -238,15 +297,32 @@ export const ViewBillGrid = ({ searchResults, fetchData }) => {
   return (
     <div>
       {newBillPopup && (
-        <CreateBillPopup fetchData={fetchData} onClose={onClosePopup} billID={billId} />
+        <CreateBillPopup
+          fetchData={fetchData}
+          onClose={onClosePopup}
+          billID={billId}
+        />
       )}
       {newDeletePopup && (
         <ConfirmationPopup
           onConfirm={handleDelete}
           onCancel={closeDeletePopup}
-
         />
       )}
+      <div className="flex justify-end gap-4 mr-8">
+        <h1 className="font-bold text-xl">
+          Total Site Expense :
+          <span className="text-red-700 font-bold text-xl">
+            {profit.totalAmount}
+          </span>
+        </h1>
+        <h1 className="font-bold text-xl">
+          Total Site Income :
+          <span className="text-green-700 font-bold text-xl">
+            {profit.totalPanelStructureGT}
+          </span>
+        </h1>
+      </div>
       {renderGrid()}
     </div>
   );

@@ -10,10 +10,9 @@ import Validator, {
 import { ErrorHandlingMessage } from "../../Utils/ErrorHandlingMessage";
 
 const CreateBillPopup = ({ onClose, billID, fetchData }) => {
-
   const [locationModel, setLocationModel] = useState({
     id: 0,
-    billNo : "",
+    billNo: "",
     companyName: "",
     date: "",
     technition: "",
@@ -105,7 +104,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   // Validation Types
   const [validationModel, setValidationModel] = useState({
     companyNameError: null,
-    billNoError:null,
+    billNoError: null,
     customerNameError: null,
     reasonError: null,
     otherExpensesError: null,
@@ -395,94 +394,137 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
           mughalGarderQ: Number(locationModel.mughalGarderQ).toFixed(2),
           mughalGarderP: Number(locationModel.mughalGarderP).toFixed(2),
           mughalGarderT: String(
-            (Number(locationModel.mughalGarderQ) *
-              Number(locationModel.mughalGarderP)).toFixed(2)
+            (
+              Number(locationModel.mughalGarderQ) *
+              Number(locationModel.mughalGarderP)
+            ).toFixed(2)
           ),
           crossPipeQ: Number(locationModel.crossPipeQ).toFixed(2),
           crossPipeP: Number(locationModel.crossPipeP).toFixed(2),
           crossPipeT: String(
-            (Number(locationModel.crossPipeQ) * Number(locationModel.crossPipeP)).toFixed(2)
+            (
+              Number(locationModel.crossPipeQ) *
+              Number(locationModel.crossPipeP)
+            ).toFixed(2)
           ),
           cChannelQ: Number(locationModel.cChannelQ).toFixed(2),
           cChannelP: Number(locationModel.cChannelP).toFixed(2),
           cChannelT: String(
-            (Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)).toFixed(2)
+            (
+              Number(locationModel.cChannelQ) * Number(locationModel.cChannelP)
+            ).toFixed(2)
           ),
           basePlateQ: Number(locationModel.basePlateQ).toFixed(2),
           basePlateP: Number(locationModel.basePlateP).toFixed(2),
           basePlateT: String(
-            (Number(locationModel.basePlateQ) * Number(locationModel.basePlateP)).toFixed(2)
+            (
+              Number(locationModel.basePlateQ) *
+              Number(locationModel.basePlateP)
+            ).toFixed(2)
           ),
           rawalBoltQ: Number(locationModel.rawalBoltP).toFixed(2),
           rawalBoltP: Number(locationModel.rawalBoltP).toFixed(2),
           rawalBoltT: String(
-            (Number(locationModel.rawalBoltQ) * Number(locationModel.rawalBoltP)).toFixed(2)
+            (
+              Number(locationModel.rawalBoltQ) *
+              Number(locationModel.rawalBoltP)
+            ).toFixed(2)
           ),
           nutBoltQ: Number(locationModel.nutBoltQ).toFixed(2),
           nutBoltP: Number(locationModel.nutBoltP).toFixed(2),
           nutBoltT: String(
-            (Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)).toFixed(2)
+            (
+              Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)
+            ).toFixed(2)
           ),
           cutterDiskQ: Number(locationModel.cutterDiskQ).toFixed(2),
           cutterDiskP: Number(locationModel.cutterDiskP).toFixed(2),
           cutterDiskT: String(
-            (Number(locationModel.cutterDiskQ) *
-              Number(locationModel.cutterDiskP)).toFixed(2)
+            (
+              Number(locationModel.cutterDiskQ) *
+              Number(locationModel.cutterDiskP)
+            ).toFixed(2)
           ),
           weldingRodQ: Number(locationModel.weldingRodQ).toFixed(2),
           weldingRodP: Number(locationModel.weldingRodP).toFixed(2),
           weldingRodT: String(
-            (Number(locationModel.weldingRodQ) *
-              Number(locationModel.weldingRodP)).toFixed(2)
+            (
+              Number(locationModel.weldingRodQ) *
+              Number(locationModel.weldingRodP)
+            ).toFixed(2)
           ),
           blackPaintQ: Number(locationModel.blackPaintQ).toFixed(2),
           blackPaintP: Number(locationModel.blackPaintP).toFixed(2),
           blackPaintT: String(
-            (Number(locationModel.blackPaintQ) *
-              Number(locationModel.blackPaintP)).toFixed(2)
+            (
+              Number(locationModel.blackPaintQ) *
+              Number(locationModel.blackPaintP)
+            ).toFixed(2)
           ),
           sprayPaintQ: Number(locationModel.sprayPaintQ).toFixed(2),
           sprayPaintP: Number(locationModel.sprayPaintP).toFixed(2),
           sprayPaintT: String(
-            (Number(locationModel.sprayPaintQ) *
-              Number(locationModel.sprayPaintP)).toFixed(2)
+            (
+              Number(locationModel.sprayPaintQ) *
+              Number(locationModel.sprayPaintP)
+            ).toFixed(2)
           ),
           epoxyQ: Number(locationModel.epoxyQ).toFixed(2),
           epoxyP: Number(locationModel.epoxyP).toFixed(2),
           epoxyT: String(
-            (Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)).toFixed(2)
+            (
+              Number(locationModel.epoxyQ) * Number(locationModel.epoxyP)
+            ).toFixed(2)
           ),
           nakkyQ: Number(locationModel.nakkyQ).toFixed(2),
           nakkyP: Number(locationModel.nakkyP).toFixed(2),
           nakkyT: String(
-            (Number(locationModel.nakkyQ) * Number(locationModel.nakkyP)).toFixed(2)
+            (
+              Number(locationModel.nakkyQ) * Number(locationModel.nakkyP)
+            ).toFixed(2)
           ),
           miliDiskQ: Number(locationModel.miliDiskQ).toFixed(2),
           miliDiskP: Number(locationModel.miliDiskP).toFixed(2),
           miliDiskT: String(
-            (Number(locationModel.miliDiskQ) * Number(locationModel.miliDiskP)).toFixed(2)
+            (
+              Number(locationModel.miliDiskQ) * Number(locationModel.miliDiskP)
+            ).toFixed(2)
           ),
           angelQ: Number(locationModel.angelQ).toFixed(2),
           angelP: Number(locationModel.angelP).toFixed(2),
           angelT: String(
-            (Number(locationModel.angelQ) * Number(locationModel.angelP)).toFixed(2)
+            (
+              Number(locationModel.angelQ) * Number(locationModel.angelP)
+            ).toFixed(2)
           ),
           topPlateQ: Number(locationModel.topPlateQ).toFixed(2),
           topPlateP: Number(locationModel.topPlateP).toFixed(2),
           topPlateT: String(
-            (Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)).toFixed(2)
+            (
+              Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)
+            ).toFixed(2)
           ),
-          panelInstallStructure1: Number(locationModel.panelInstallStructure1).toFixed(2),
-          panelInstallStructureP: Number(locationModel.panelInstallStructureP).toFixed(2),
-          panelInstallStructureG: Number(locationModel.panelInstallStructureG).toFixed(2),
+          panelInstallStructure1: Number(
+            locationModel.panelInstallStructure1
+          ).toFixed(2),
+          panelInstallStructureP: Number(
+            locationModel.panelInstallStructureP
+          ).toFixed(2),
+          panelInstallStructureG: Number(
+            locationModel.panelInstallStructureG
+          ).toFixed(2),
           panelInstallStructureST: String(
-            (Number(locationModel.panelInstallStructure1) *
-              Number(locationModel.panelInstallStructureP)).toFixed(2)
+            (
+              Number(locationModel.panelInstallStructure1) *
+              Number(locationModel.panelInstallStructureP)
+            ).toFixed(2)
           ),
           panelInstallStructureGT: String(
-            (Number(locationModel.panelInstallStructure1) *
+            (
+              Number(locationModel.panelInstallStructure1) *
               Number(locationModel.panelInstallStructureP) *
-              Number(locationModel.panelInstallStructureG)).toFixed(2)
+              Number(locationModel.panelInstallStructureG)
+            ).toFixed(2)
           ),
           total: Object.keys(locationModel)
             .filter((k) => !k.endsWith("Q"))
@@ -493,7 +535,8 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   (locationModel[key.slice(0, key.length - 1) + "Q"] || 0);
               }
               return accumulator;
-            }, 0).toFixed(2),
+            }, 0)
+            .toFixed(2),
         };
 
         const payload = {
@@ -512,21 +555,21 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
         );
         const data = response.data;
         if (data.success) {
-          if(flag === true){
+          if (flag === true) {
             onClose();
             fetchData();
-          }else{
+          } else {
             clearFields();
             fetchData();
           }
           toast.success("Data saved successfully");
-        }else{
+        } else {
           toast.error("Error saving data");
         }
 
         // if (data.success && flag === false) {
         //   toast.success("Data saved successfully");
-          
+
         // } else {
         //   toast.error("Error saving data");
         // }
@@ -580,7 +623,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                   <h2 className="text-xl font-semibold">
                     {billID ? "Update Bill" : "Add Bill"}
                   </h2>
-                   <div className="col-span-6 md:col-span-3">
+                  <div className="col-span-6 md:col-span-3">
                     <CustomInput
                       name={"billNo"}
                       value={locationModel.billNo}
@@ -590,7 +633,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                       placeholder=""
                       required={true}
                     />
-                     {validationModel.billNoError}
+                    {validationModel.billNoError}
                   </div>
                   <button
                     onClick={onClose}
@@ -711,7 +754,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.mughalGarderQ *
-                        locationModel.mughalGarderP
+                          locationModel.mughalGarderP
                       ).toFixed(2)}
                     </h1>
                   </div>
@@ -719,7 +762,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
                   {/*  */}
                   <div className="col-span-12 md:col-span-2">
-                    <h1 className="mt-2 text-center">Cross Pipe</h1>
+                    <h1 className="mt-2 text-center">Cross Pipe 18G</h1>
                   </div>
                   <div className="col-span-12 md:col-span-4">
                     <CustomInput
@@ -752,7 +795,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
                   {/*  */}
                   <div className="col-span-12 md:col-span-2">
-                    <h1 className="mt-2 text-center">C channel</h1>
+                    <h1 className="mt-2 text-center">C channel 138"</h1>
                   </div>
                   <div className="col-span-12 md:col-span-4">
                     <CustomInput
@@ -1200,7 +1243,6 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                           }, 0)
                       ).toFixed(2)}
                     </h1>
-
                   </div>
                   {/*  */}
 
@@ -1234,7 +1276,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.panelInstallStructure1 *
-                        locationModel.panelInstallStructureP
+                          locationModel.panelInstallStructureP
                       ).toFixed(2)}
                     </h1>
                   </div>
@@ -1253,18 +1295,18 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-2xl text-green-700 text-end ">
                       {Number(
                         locationModel.panelInstallStructure1 *
-                        locationModel.panelInstallStructureP *
-                        locationModel.panelInstallStructureG +
-                        (locationModel.otherExpenses ? parseFloat(locationModel.otherExpenses) : 0)
+                          locationModel.panelInstallStructureP *
+                          locationModel.panelInstallStructureG +
+                          (locationModel.otherExpenses
+                            ? parseFloat(locationModel.otherExpenses)
+                            : 0)
                       ).toFixed(2)}
                     </h1>
                   </div>
                   {/*  */}
 
                   <div className="col-span-12 md:col-span-2">
-                    <h1 className="mt-2 text-center">
-                      Other Expenses
-                    </h1>
+                    <h1 className="mt-2 text-center">Other Expenses</h1>
                   </div>
                   <div className="col-span-12 md:col-span-2">
                     <CustomInput
@@ -1291,6 +1333,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
                 <div className="flex justify-end px-4 py-4 border-t-2">
                   <CustomButton
+                  type={"primary"}
                     onClick={
                       billID ? () => onAddBill(true) : () => onAddBill(false)
                     }

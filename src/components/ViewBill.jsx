@@ -7,44 +7,55 @@ import { ViewBillGrid } from "./ViewBillGrid";
 import { toast } from "react-toastify";
 
 export const ViewBill = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState({
+    companyName: "",
+    technition: "",
+    startDate: "",
+    endDate: "",
+  });
 
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-  const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-  };
-
-  const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-  };
+  const [profit, setProfit] = useState({
+    totalAmount: 0,
+    totalPanelStructureGT: 0,
+  });
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const { name, value } = e.target;
+    setSearchQuery((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
+  const handleSearch = () => {
+    // Destructure searchQuery to ensure we're using the latest state
+    const { companyName, technition, startDate, endDate } = searchQuery;
 
-  const handleSearch = async () => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_URL}/api/search`, {
-        companyName: searchQuery.toUpperCase(),
-        startDate: startDate,
-        endDate: endDate,
+    axios
+      .post(`${process.env.REACT_APP_URL}/api/search`, {
+        companyName: companyName.toUpperCase(),
+        technition: technition.toUpperCase(),
+        startDate,
+        endDate,
+      })
+      .then((response) => {
+        const data = response.data;
+        if (data.success) {
+          setSearchResults(data.data);
+          setProfit({
+            totalAmount: data.totalAmount,
+            totalPanelStructureGT: data.totalPanelStructureGT,
+          });
+        } else {
+          console.error("Error searching data:", data.message);
+        }
+      })
+      .catch((error) => {
+        toast.error("Data not found");
+        console.error("Error searching data:", error);
       });
-      const data = response.data;
-      if (data.success) {
-        setSearchResults(data.data);
-      } else {
-        console.error("Error searching data:", data.message);
-      }
-    } catch (error) {
-      toast.error("Data not found");
-      console.error("Error searching data:", error);
-    }
   };
 
   const onClosePopup = (e, isSaved) => {
@@ -57,7 +68,9 @@ export const ViewBill = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_URL}/api/getAllData`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_URL}/api/getAllData`
+      );
       const data = response.data;
       if (data.success) {
         setSearchResults(data.data);
@@ -90,46 +103,68 @@ export const ViewBill = () => {
               <input
                 type="text"
                 className="w-64 focus:outline-none bg-[#F0F5FB]"
-                value={searchQuery}
+                name="companyName"
+                value={searchQuery.companyName}
                 onChange={handleSearchChange}
-                placeholder="Search..."
+                placeholder="Company Name"
               />
             </div>
           </div>
           <div className="flex gap-2">
-    
-            <h1 className="text-red-700" htmlFor="">start date</h1>
+            <div className="bg-[#F0F5FB] rounded-lg border items-center w-96 outline-none flex py-2 px-3">
+              <BiSearch className="w-6 h-6 text-[#007495]" />
+              <input
+                type="text"
+                className="w-64 focus:outline-none bg-[#F0F5FB]"
+                name="technition"
+                value={searchQuery.technition}
+                onChange={handleSearchChange}
+                placeholder="Technician Name"
+              />
+            </div>
+            <h1 className="text-red-700" htmlFor="">
+              start date
+            </h1>
             <input
               className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
               type="date"
-              value={startDate}
-              onChange={handleStartDateChange}
+              name="startDate"
+              value={searchQuery.startDate}
+              onChange={handleSearchChange}
             />
 
-
-            <label htmlFor="" className="text-red-700">end date</label>
+            <label htmlFor="" className="text-red-700">
+              end date
+            </label>
             <input
               className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
               type="date"
-              value={endDate}
-              onChange={handleEndDateChange}
+              name="endDate"
+              value={searchQuery.endDate}
+              onChange={handleSearchChange}
             />
-
-
           </div>
-          <div className="flex gap-8 item">
+          <div className="flex gap-2 item">
             <CustomButton
               text={"Search"}
               type={"outline"}
               extraClass="text-lg"
               onClick={handleSearch}
             />
-            <CustomButton onClick={onOpenPopup} text={"Add New Bill"} />
+            <CustomButton
+              onClick={onOpenPopup}
+              type={"primary"}
+              text={"Add New Bill"}
+            />
           </div>
         </div>
       </div>
 
-      <ViewBillGrid fetchData={fetchData} searchResults={searchResults} />
+      <ViewBillGrid
+        fetchData={fetchData}
+        searchResults={searchResults}
+        profit={profit}
+      />
     </div>
   );
 };
