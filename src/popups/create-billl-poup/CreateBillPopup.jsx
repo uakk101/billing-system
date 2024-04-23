@@ -378,6 +378,18 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
           newState[key] = "";
         }
       }
+      newState['billNo'] = "";
+      newState['address'] = "";
+      newState['customerName'] = "";
+      newState['technition'] = "";
+      newState['date'] = "";
+      newState['companyName'] = "";
+      newState['otherExpenses'] = "";
+      newState['reason'] = "";
+      newState['panelInstallStructure1'] = "";
+      newState['panelInstallStructureP'] = "";
+      newState['panelInstallStructureG'] = "";
+       
       return newState;
     });
   };
@@ -385,7 +397,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   const onAddBill = async (flag) => {
     let my_validation = setValidation();
     if (my_validation) {
-      // Handle validation error
+       
     } else {
       try {
         // Calculate the T values
