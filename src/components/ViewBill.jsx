@@ -5,6 +5,7 @@ import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
 import axios from "axios";
 import { ViewBillGrid } from "./ViewBillGrid";
 import { toast } from "react-toastify";
+import GenerateBillPopup from "../popups/create-billl-poup/GenerateBillPopup";
 
 export const ViewBill = () => {
   const [searchQuery, setSearchQuery] = useState({
@@ -31,17 +32,17 @@ export const ViewBill = () => {
   };
   const handleSearch = () => {
     const { companyName, technition, startDate, endDate } = searchQuery;
-  
+
     // Check if all search fields are empty
     const isEmptySearch = Object.values(searchQuery).every(value => value === "");
-  
+
     // Check if only one of the dates is provided
     const isStartDateMissing = !startDate && endDate;
     const isEndDateMissing = startDate && !endDate;
-  
+
     if (isEmptySearch) {
       // If all search fields are empty, fetch all data
-      
+
       fetchData();
     } else if (isStartDateMissing) {
       // If only start date is missing
@@ -67,7 +68,7 @@ export const ViewBill = () => {
               totalAmount: data.totalAmount,
               totalPanelStructureGT: data.totalPanelStructureGT,
             });
-           
+
           } else {
             console.error("Error searching data:", data.message);
           }
@@ -80,7 +81,7 @@ export const ViewBill = () => {
         });
     }
   };
-  
+
 
   const onClosePopup = (e, isSaved) => {
     setNewBillPopup(false);
@@ -113,13 +114,13 @@ export const ViewBill = () => {
     }
   };
   useEffect(() => {
- 
+
     fetchData();
   }, []);
 
   return (
     <div>
-       {isLoading && (
+      {isLoading && (
         <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-200 bg-opacity-50">
           <p className="text-lg font-semibold">Loading...</p>
         </div>
@@ -130,6 +131,12 @@ export const ViewBill = () => {
           billID={""}
           fetchData={fetchData}
         />
+        // <GenerateBillPopup
+        //   onClose={onClosePopup}
+        //   billID={""}
+        //   fetchData={fetchData}
+        // />
+
       )}
       <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">

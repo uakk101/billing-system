@@ -389,7 +389,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
       newState['panelInstallStructure1'] = "";
       newState['panelInstallStructureP'] = "";
       newState['panelInstallStructureG'] = "";
-       
+
       return newState;
     });
   };
@@ -397,7 +397,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
   const onAddBill = async (flag) => {
     let my_validation = setValidation();
     if (my_validation) {
-       
+
     } else {
       try {
         // Calculate the T values
@@ -765,7 +765,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.mughalGarderQ *
-                          locationModel.mughalGarderP
+                        locationModel.mughalGarderP
                       ).toFixed(2)}
                     </h1>
                   </div>
@@ -1287,7 +1287,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.panelInstallStructure1 *
-                          locationModel.panelInstallStructureP
+                        locationModel.panelInstallStructureP
                       ).toFixed(2)}
                     </h1>
                   </div>
@@ -1306,11 +1306,11 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-2xl text-green-700 text-end ">
                       {Number(
                         locationModel.panelInstallStructure1 *
-                          locationModel.panelInstallStructureP *
-                          locationModel.panelInstallStructureG +
-                          (locationModel.otherExpenses
-                            ? parseFloat(locationModel.otherExpenses)
-                            : 0)
+                        locationModel.panelInstallStructureP *
+                        locationModel.panelInstallStructureG +
+                        (locationModel.otherExpenses
+                          ? parseFloat(locationModel.otherExpenses)
+                          : 0)
                       ).toFixed(2)}
                     </h1>
                   </div>
@@ -1344,7 +1344,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
                 <div className="flex justify-end px-4 py-4 border-t-2">
                   <CustomButton
-                  type={"primary"}
+                    type={"primary"}
                     onClick={
                       billID ? () => onAddBill(true) : () => onAddBill(false)
                     }

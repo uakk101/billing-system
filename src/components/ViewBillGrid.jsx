@@ -6,6 +6,7 @@ import ConfirmationPopup from "../popups/ConfirmationPopup/ConfirmationPopup";
 import axios from "axios";
 
 import { toast } from "react-toastify";
+import GenerateBillPopup from "../popups/create-billl-poup/GenerateBillPopup";
 
 export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
@@ -41,7 +42,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   };
 
   const closeDeletePopup = (e, isSaved) => {
- 
+
     // fetchData();
     setDeletePopup(false);
   };
@@ -71,7 +72,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
       );
       const data = response.data;
       if (data.success) {
- 
+
         toast.success("Deleted Successfully");
         fetchData();
         // Handle any additional logic or UI updates after successful deletion
@@ -155,9 +156,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
         </div>
         {activeAccordion === index ? (
           <div
-            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${
-              activeAccordion === index ? " h-[475px]" : ""
-            }`}
+            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? " h-[475px]" : ""
+              }`}
           >
             <table className="w-full text-sm">
               <thead className="bg-[#F5F5F5] w-full">
@@ -297,11 +297,18 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   return (
     <div>
       {newBillPopup && (
+
+
         <CreateBillPopup
           fetchData={fetchData}
           onClose={onClosePopup}
           billID={billId}
         />
+        // <GenerateBillPopup
+        //   fetchData={fetchData}
+        //   onClose={onClosePopup}
+        //   billID={billId}
+        // />
       )}
       {newDeletePopup && (
         <ConfirmationPopup
