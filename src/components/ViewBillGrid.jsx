@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { BiSolidChevronDown, BiSolidChevronUp } from "react-icons/bi";
 import CustomButton from "../common/CustomButton";
-import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
 import ConfirmationPopup from "../popups/ConfirmationPopup/ConfirmationPopup";
 import axios from "axios";
-
 import { toast } from "react-toastify";
 import GenerateBillPopup from "../popups/create-billl-poup/GenerateBillPopup";
 
@@ -16,6 +14,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   // const handleClick = () => {
   //   setActiveAccordion(!activeAccordion);
   // };
+
+
   const handleClick = (index) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
@@ -25,7 +25,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
     setNewBillPopup(true);
   };
 
-  const onClosePopup = (e, isSaved) => {
+  const onClosePopup = () => {
     setNewBillPopup(false);
   };
   const openDeletePopup = (id) => {
@@ -46,6 +46,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
     // fetchData();
     setDeletePopup(false);
   };
+
+   
 
   const handleDownloadPDF = async (id) => {
     try {
@@ -90,6 +92,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
     const sortedResults = searchResults
       .slice()
       .sort((a, b) => a.billNo - b.billNo);
+
+      
 
     return sortedResults.map((result, index) => (
       <div
@@ -229,9 +233,11 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
                   }
                   return null;
                 })}
+
+                
                 <tr className="border-t">
                   <td colSpan={3} className="text-xl font-bold text-right ">
-                    {" "}
+                    
                   </td>
                   <td
                     colSpan={3}
@@ -242,6 +248,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
                 </tr>
               </tbody>
             </table>
+            
+            {result.panelInstallStructure && result.panelInstallStructure.length > 0 ? 
             <table className="w-full mb-4 text-sm">
               <thead className="bg-[#F5F5F5]">
                 <tr className="text-base">
@@ -254,18 +262,58 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
                 </tr>
               </thead>
               <tbody>
+                {/* Render panelInstallStructure data */}
+                {result.panelInstallStructure.map((item, i) => (
+                  <tr key={i}>
+                    <td>PanelInstall Structure</td>
+                    <td>{item.panelInstallStructure1}</td>
+                    <td>{item.panelInstallStructureP}</td>
+                    <td>{item.panelInstallStructureST}</td>
+                    <td>{item.panelInstallStructureG}</td>
+                    <td className="text-xl font-bold text-green-600">{item.panelInstallStructureGT}</td>
+                  </tr>
+                ))}
+              </tbody>   
+            <tbody>
                 <tr>
-                  <td>PanelInstall Structure</td>
-                  <td>{result.panelInstallStructure1}</td>
-                  <td>{result.panelInstallStructureP}</td>
-                  <td>{result.panelInstallStructureST}</td>
-                  <td>{result.panelInstallStructureG}</td>
+                  <td>Total</td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
                   <td className="text-xl font-bold text-green-600">
-                    {result.panelInstallStructureGT}
+                    {result.panelInstallStructureTotal}
                   </td>
                 </tr>
               </tbody>
             </table>
+              :
+            <table className="w-full mb-4 text-sm">
+              <thead className="bg-[#F5F5F5]">
+                <tr className="text-base">
+                  <th className="text-left">Name</th>
+                  <th className="text-left">Watts</th>
+                  <th className="text-left">Quantity(Panel)</th>
+                  <th className="text-left">Total Watt</th>
+                  <th className="text-left">Price Per watt</th>
+                  <th className="text-left">Total</th>
+                </tr>
+              </thead>
+              
+              <tbody>
+                <tr>
+                  <td>PanelInstall Structure</td>
+                  <td>{result?.panelInstallStructure1}</td>
+                  <td>{result?.panelInstallStructureP}</td>
+                  <td>{result?.panelInstallStructureST}</td>
+                  <td>{result?.panelInstallStructureG}</td>
+                  <td className="text-xl font-bold text-green-600">
+                    {result?.panelInstallStructureGT}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            }
             <table className="w-full mb-4 text-sm">
               <thead className="bg-[#F5F5F5]">
                 <tr className="text-base">
@@ -299,16 +347,16 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
       {newBillPopup && (
 
 
-        <CreateBillPopup
-          fetchData={fetchData}
-          onClose={onClosePopup}
-          billID={billId}
-        />
-        // <GenerateBillPopup
+        // <CreateBillPopup
         //   fetchData={fetchData}
         //   onClose={onClosePopup}
         //   billID={billId}
         // />
+        <GenerateBillPopup
+          fetchData={fetchData}
+          onClose={onClosePopup}
+          billID={billId}
+        />
       )}
       {newDeletePopup && (
         <ConfirmationPopup

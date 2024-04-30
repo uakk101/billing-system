@@ -126,16 +126,16 @@ export const ViewBill = () => {
         </div>
       )}
       {newBillPopup && (
-        <CreateBillPopup
-          onClose={onClosePopup}
-          billID={""}
-          fetchData={fetchData}
-        />
-        // <GenerateBillPopup
+        // <CreateBillPopup
         //   onClose={onClosePopup}
         //   billID={""}
         //   fetchData={fetchData}
         // />
+        <GenerateBillPopup
+          onClose={onClosePopup}
+          billID={""}
+          fetchData={fetchData}
+        />
 
       )}
       <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">

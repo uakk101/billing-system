@@ -107,29 +107,39 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
             panelInstallStructureG: "",
             panelInstallStructureST: "",
             panelInstallStructureGT: "",
-        }]
+        }],
+        panelInstallStructureTotal: ""
 
 
     });
-    // console.log("show me the data", locationModel.panelInstallStructure)
+
     // const [loading, setLoading] = useState(false);
 
     const onhandleChange = (e, index) => {
         const { name, value } = e.target;
-        let eventValue = value.replace(/^\s*/gm, "");
 
-        setLocationModel(prevState => {
-            const updatedPanelItems = [...prevState.panelInstallStructure];
-            updatedPanelItems[index] = {
-                ...updatedPanelItems[index],
-                [name]: eventValue
-            };
-            return {
+        // If the field name is not within panelInstallStructure
+        if (!name.includes("panelInstallStructure")) {
+            setLocationModel(prevState => ({
                 ...prevState,
-                panelInstallStructure: updatedPanelItems
-            };
-        });
+                [name]: value
+            }));
+        } else {
+            // If the field name is within panelInstallStructure
+            setLocationModel(prevState => {
+                const updatedPanelItems = [...prevState.panelInstallStructure];
+                updatedPanelItems[index] = {
+                    ...updatedPanelItems[index],
+                    [name]: value
+                };
+                return {
+                    ...prevState,
+                    panelInstallStructure: updatedPanelItems
+                };
+            });
+        }
     };
+
 
 
     // Validation Types
@@ -495,10 +505,31 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
         setLocationModel((prevState) => {
             const newState = { ...prevState };
             for (const key in newState) {
-                if (key.endsWith("Q") && !key.endsWith("P")) {
-                    newState[key] = "";
+                if (Array.isArray(newState[key])) {
+                    // Clear fields within arrays
+                    newState[key] = newState[key].map(item => {
+                        if (typeof item === 'object') {
+                            // Clear fields within objects
+                            const newItem = { ...item };
+                            for (const subKey in newItem) {
+                                if (subKey.endsWith("Q") && !subKey.endsWith("P")) {
+                                    newItem[subKey] = "";
+                                }
+                            }
+                            return newItem;
+                        } else {
+                            // If not an object, retain the value
+                            return item;
+                        }
+                    });
+                } else {
+                    // Clear non-array fields
+                    if (key.endsWith("Q") && !key.endsWith("P")) {
+                        newState[key] = "";
+                    }
                 }
             }
+            // Clear other specific fields
             newState['billNo'] = "";
             newState['address'] = "";
             newState['customerName'] = "";
@@ -507,13 +538,11 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
             newState['companyName'] = "";
             newState['otherExpenses'] = "";
             newState['reason'] = "";
-            newState['panelInstallStructure1'] = "";
-            newState['panelInstallStructureP'] = "";
-            newState['panelInstallStructureG'] = "";
-
+    
             return newState;
         });
     };
+    
 
     const onAddBill = async (flag) => {
         let my_validation = setValidation();
@@ -521,6 +550,17 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
 
         } else {
             try {
+                const panelInstallStructureTotal = locationModel.panelInstallStructure
+                    ? (
+                        locationModel.panelInstallStructure.map(item => (
+                            parseFloat(
+                                item.panelInstallStructure1 * item.panelInstallStructureP * item.panelInstallStructureG
+                            )
+                        )).reduce((total, calculation) => total + calculation, 0) +
+                        parseFloat(locationModel.otherExpenses || 0)
+                    ).toFixed(2)
+                    : "0.00";
+
                 // Calculate the T values
                 const updatedLocationModel = {
                     ...locationModel,
@@ -637,28 +677,46 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                             Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)
                         ).toFixed(2)
                     ),
-                    panelInstallStructure1: Number(
-                        locationModel.panelInstallStructure1
-                    ).toFixed(2),
-                    panelInstallStructureP: Number(
-                        locationModel.panelInstallStructureP
-                    ).toFixed(2),
-                    panelInstallStructureG: Number(
-                        locationModel.panelInstallStructureG
-                    ).toFixed(2),
-                    panelInstallStructureST: String(
-                        (
-                            Number(locationModel.panelInstallStructure1) *
-                            Number(locationModel.panelInstallStructureP)
-                        ).toFixed(2)
-                    ),
-                    panelInstallStructureGT: String(
-                        (
-                            Number(locationModel.panelInstallStructure1) *
-                            Number(locationModel.panelInstallStructureP) *
-                            Number(locationModel.panelInstallStructureG)
-                        ).toFixed(2)
-                    ),
+                    panelInstallStructure: locationModel.panelInstallStructure.map(item => ({
+                        ...item,
+                        panelInstallStructureST: (
+                            parseFloat(item.panelInstallStructure1 || 0) *
+                            parseFloat(item.panelInstallStructureP || 0)
+                        ).toFixed(2),
+                        panelInstallStructureGT: (
+                            parseFloat(item.panelInstallStructure1 || 0) *
+                            parseFloat(item.panelInstallStructureP || 0) *
+                            parseFloat(item.panelInstallStructureG || 0)
+                        ).toFixed(2),
+                    })),
+
+
+                    panelInstallStructureTotal: panelInstallStructureTotal,
+
+                    //     item.panelInstallStructure1 =  Number(
+                    //         item.panelInstallStructure1
+                    //     ).toFixed(2),
+                    //     panelInstallStructureP: Number(
+                    //         locationModel.panelInstallStructureP
+                    //     ).toFixed(2),
+                    //     panelInstallStructureG: Number(
+                    //         locationModel.panelInstallStructureG
+                    //     ).toFixed(2),
+                    //     panelInstallStructureST: String(
+                    //         (
+                    //             Number(locationModel.panelInstallStructure1) *
+                    //             Number(locationModel.panelInstallStructureP)
+                    //         ).toFixed(2)
+                    //     ),
+                    //     panelInstallStructureGT: String(
+                    //         (
+                    //             Number(locationModel.panelInstallStructure1) *
+                    //             Number(locationModel.panelInstallStructureP) *
+                    //             Number(locationModel.panelInstallStructureG)
+                    //         ).toFixed(2)
+                    //     ),
+                    // })),
+
                     total: Object.keys(locationModel)
                         .filter((k) => !k.endsWith("Q"))
                         .reduce((accumulator, key) => {
@@ -737,7 +795,6 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
             setItems([...items, 'New Item']);
         }
     };
-    console.log("show me the data2222", locationModel.panelInstallStructure)
 
 
 
@@ -785,7 +842,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
             <div data-te-modal-dialog-ref className="pointer-events-none flex items-center relative h-[calc(100%-1rem)] w-auto translate-y-[-50px] transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-2 min-[576px]:max-w-[500px] min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px] transform-none opacity-100">
                 <div className="pointer-events-auto p-5 relative flex justify-between max-h-[100%] w-full flex-col overflow-hidden rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
 
-                    <div className='pb-3 text-2xl flex justify-between items-center font-semibold border-b'>
+                    <div className='flex items-center justify-between pb-3 text-2xl font-semibold border-b'>
                         {billID ? "Update Bill" : "Add Bill"}
                         <div className="">
                             <CustomInput
@@ -870,7 +927,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
 
                     </div>
                     <div className="relative overflow-y-auto">
-                        <div className="relative max-w-6xl overflow-hidden text-left transition-all transform bg-white rounded-lg  sm:my-8 sm:w-full">
+                        <div className="relative max-w-6xl overflow-hidden text-left transition-all transform bg-white rounded-lg sm:my-8 sm:w-full">
                             <div className="bg-white ">
 
                                 {/* 
@@ -1522,16 +1579,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                                             ).toFixed(2)}
                                         </h1>
                                     </div>
-
-
-
-
-
                                 </div>
-
-
-
-
                             </div>
                         </div>
                         <button
@@ -1544,12 +1592,10 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
 
 
                         <div className="">
-                            {/* Button to add a new item */}
 
 
-                            {/* Displaying the list of items */}
-                            {items.map((item, index) => (
-                                <div className='grid grid-cols-12 gap-4 py-2 px-4' key={index}>
+                            {locationModel.panelInstallStructure && locationModel.panelInstallStructure.map((item, index) => (
+                                <div className='grid grid-cols-12 gap-4 px-4 py-2' key={index}>
                                     <div className="col-span-12 md:col-span-2">
                                         <h1 className="mt-2 text-left">
                                             Panel Install Structure
@@ -1558,7 +1604,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                                     <div className="col-span-12 md:col-span-2">
                                         <CustomInput
                                             name={"panelInstallStructure1"}
-                                            value={locationModel.panelInstallStructure[index].panelInstallStructure1}
+                                            value={item.panelInstallStructure1}
                                             onChange={(e) => onhandleChange(e, index)}
                                             type="text"
                                             required={true}
@@ -1568,7 +1614,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                                     <div className="col-span-12 md:col-span-2">
                                         <CustomInput
                                             name={"panelInstallStructureP"}
-                                            value={locationModel.panelInstallStructure[index].panelInstallStructureP}
+                                            value={item.panelInstallStructureP}
                                             onChange={(e) => onhandleChange(e, index)}
                                             type="text"
                                             required={true}
@@ -1577,16 +1623,13 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                                     </div>
                                     <div className="col-span-12 md:col-span-1">
                                         <h1 className="mt-2 text-end">
-                                            {Number(
-                                                locationModel.panelInstallStructure[index].panelInstallStructure1 *
-                                                locationModel.panelInstallStructure[index].panelInstallStructureP
-                                            ).toFixed(2)}
+                                            {Number(item.panelInstallStructure1 * item.panelInstallStructureP).toFixed(2)}
                                         </h1>
                                     </div>
                                     <div className="col-span-12 md:col-span-2">
                                         <CustomInput
                                             name={"panelInstallStructureG"}
-                                            value={locationModel.panelInstallStructure[index].panelInstallStructureG}
+                                            value={item.panelInstallStructureG}
                                             onChange={(e) => onhandleChange(e, index)}
                                             type="text"
                                             required={true}
@@ -1596,33 +1639,40 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                                     <div className="col-span-12 md:col-span-2">
                                         <h1 className="mt-2 text-2xl text-green-700 text-end ">
                                             {Number(
-                                                locationModel.panelInstallStructure[index].panelInstallStructure1 *
-                                                locationModel.panelInstallStructure[index].panelInstallStructureP *
-                                                locationModel.panelInstallStructure[index].panelInstallStructureG +
-                                                (locationModel.panelInstallStructure[index].otherExpenses
-                                                    ? parseFloat(locationModel.panelInstallStructure[index].otherExpenses)
-                                                    : 0)
+                                                item.panelInstallStructure1 * item.panelInstallStructureP * item.panelInstallStructureG +
+                                                (item.otherExpenses ? parseFloat(item.otherExpenses) : 0)
                                             ).toFixed(2)}
                                         </h1>
                                     </div>
-                                    {index === 0 ? "" : (<div className='col-span-1'>
-                                        <button
-                                            onClick={() => deleteItem(index)}
-                                            className="py-1.5 px-3  shrink-0 border rounded-lg bg-red-600 text-white border-slate-200 hover:border-slate-300 shadow-sm"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>)}
+                                    {index === 0 ? "" : (
+                                        <div className='col-span-1'>
+                                            <button
+                                                onClick={() => deleteItem(index)}
+                                                className="py-1.5 px-3  shrink-0 border rounded-lg bg-red-600 text-white border-slate-200 hover:border-slate-300 shadow-sm"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                            <div className="grid grid-cols-12 gap-2 px-24 py-2">
+                                <div className="col-span-10 md:col-span-10">
+                                    <h1 className="mt-2 text-right">Total:</h1>
+                                </div>
+                                <div className="col-span-2 md:col-span-2">
+                                    <h1 className="mt-2 text-2xl text-green-700 text-end">
+                                        {((locationModel.panelInstallStructure && locationModel.panelInstallStructure.map(item => (
+                                            parseFloat(
+                                                item.panelInstallStructure1 * item.panelInstallStructureP * item.panelInstallStructureG
+                                            )
+                                        )).reduce((total, calculation) => total + calculation, 0) || 0) + parseFloat(locationModel.otherExpenses || 0)).toFixed(2)}
+                                    </h1>
                                 </div>
 
-                            ))}
-
-
+                            </div>
                         </div>
-
                     </div>
-
-
 
                     <div className="grid grid-cols-12 gap-4 px-4">
                         <div className="col-span-12 md:col-span-2">
