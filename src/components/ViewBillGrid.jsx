@@ -15,7 +15,6 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   //   setActiveAccordion(!activeAccordion);
   // };
 
-
   const handleClick = (index) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
@@ -42,12 +41,9 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   };
 
   const closeDeletePopup = (e, isSaved) => {
-
     // fetchData();
     setDeletePopup(false);
   };
-
-   
 
   const handleDownloadPDF = async (id) => {
     try {
@@ -74,7 +70,6 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
       );
       const data = response.data;
       if (data.success) {
-
         toast.success("Deleted Successfully");
         fetchData();
         // Handle any additional logic or UI updates after successful deletion
@@ -92,8 +87,6 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
     const sortedResults = searchResults
       .slice()
       .sort((a, b) => a.billNo - b.billNo);
-
-      
 
     return sortedResults.map((result, index) => (
       <div
@@ -160,8 +153,9 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
         </div>
         {activeAccordion === index ? (
           <div
-            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? " h-[475px]" : ""
-              }`}
+            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${
+              activeAccordion === index ? " h-[475px]" : ""
+            }`}
           >
             <table className="w-full text-sm">
               <thead className="bg-[#F5F5F5] w-full">
@@ -183,42 +177,14 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
               <tbody>
                 {Object.keys(result).map((key, index) => {
                   if (key.endsWith("Q") && key !== "panelInstallStructureQ") {
-                    const name = key.slice(0, -1); // Remove the last character 'Q'
+                    const name = key.replace(/Q$/, ""); // Remove the 'Q' at the end of the key
                     const quantity = result[key];
                     const price = result[`${name}P`];
                     const total = result[`${name}T`];
 
                     return (
                       <tr key={index}>
-                        {name === "mughalGarder" && (
-                          <td colSpan={3}>Mughal Garder</td>
-                        )}
-                        {name === "crossPipe" && (
-                          <td colSpan={3}>Cross Pipe</td>
-                        )}
-                        {name === "cChannel" && <td colSpan={3}>C Channel</td>}
-                        {name === "basePlate" && (
-                          <td colSpan={3}>Base Plate</td>
-                        )}
-                        {name === "rawalBolt" && <td colSpan={3}>Rawal Bol</td>}
-                        {name === "nutBolt" && <td colSpan={3}>Nut Bolt</td>}
-                        {name === "cutterDisk" && (
-                          <td colSpan={3}>Cutter Disk</td>
-                        )}
-                        {name === "weldingRod" && (
-                          <td colSpan={3}>Welding Rod</td>
-                        )}
-                        {name === "blackPaint" && (
-                          <td colSpan={3}>Black Paint</td>
-                        )}
-                        {name === "sprayPaint" && (
-                          <td colSpan={3}>Spray Paint</td>
-                        )}
-                        {name === "epoxy" && <td colSpan={3}>Epoxy</td>}
-                        {name === "nakky" && <td colSpan={3}>Nakky</td>}
-                        {name === "miliDisk" && <td colSpan={3}>Mili Disk</td>}
-                        {name === "angel" && <td colSpan={3}>Angel</td>}
-                        {name === "topPlate" && <td colSpan={3}>Top Plate</td>}
+                        <td colSpan={3}>{result[name]}</td>
                         <td className="pr-8 text-right" colSpan={1}>
                           {quantity}
                         </td>
@@ -234,11 +200,11 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
                   return null;
                 })}
 
-                
                 <tr className="border-t">
-                  <td colSpan={3} className="text-xl font-bold text-right ">
-                    
-                  </td>
+                  <td
+                    colSpan={3}
+                    className="text-xl font-bold text-right "
+                  ></td>
                   <td
                     colSpan={3}
                     className="pr-32 text-xl font-bold text-right text-red-800"
@@ -248,72 +214,75 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
                 </tr>
               </tbody>
             </table>
-            
-            {result.panelInstallStructure && result.panelInstallStructure.length > 0 ? 
-            <table className="w-full mb-4 text-sm">
-              <thead className="bg-[#F5F5F5]">
-                <tr className="text-base">
-                  <th className="text-left">Name</th>
-                  <th className="text-left">Watts</th>
-                  <th className="text-left">Quantity(Panel)</th>
-                  <th className="text-left">Total Watt</th>
-                  <th className="text-left">Price Per watt</th>
-                  <th className="text-left">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* Render panelInstallStructure data */}
-                {result.panelInstallStructure.map((item, i) => (
-                  <tr key={i}>
-                    <td>PanelInstall Structure</td>
-                    <td>{item.panelInstallStructure1}</td>
-                    <td>{item.panelInstallStructureP}</td>
-                    <td>{item.panelInstallStructureST}</td>
-                    <td>{item.panelInstallStructureG}</td>
-                    <td className="text-xl font-bold text-green-600">{item.panelInstallStructureGT}</td>
+
+            {result.panelInstallStructure &&
+            result.panelInstallStructure.length > 0 ? (
+              <table className="w-full mb-4 text-sm">
+                <thead className="bg-[#F5F5F5]">
+                  <tr className="text-base">
+                    <th className="text-left">Name</th>
+                    <th className="text-left">Watts</th>
+                    <th className="text-left">Quantity(Panel)</th>
+                    <th className="text-left">Total Watt</th>
+                    <th className="text-left">Price Per watt</th>
+                    <th className="text-left">Total</th>
                   </tr>
-                ))}
-              </tbody>   
-            <tbody>
-                <tr>
-                  <td>Total</td>
-                  <td> </td>
-                  <td> </td>
-                  <td> </td>
-                  <td> </td>
-                  <td className="text-xl font-bold text-green-600">
-                    {result.panelInstallStructureTotal}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-              :
-            <table className="w-full mb-4 text-sm">
-              <thead className="bg-[#F5F5F5]">
-                <tr className="text-base">
-                  <th className="text-left">Name</th>
-                  <th className="text-left">Watts</th>
-                  <th className="text-left">Quantity(Panel)</th>
-                  <th className="text-left">Total Watt</th>
-                  <th className="text-left">Price Per watt</th>
-                  <th className="text-left">Total</th>
-                </tr>
-              </thead>
-              
-              <tbody>
-                <tr>
-                  <td>PanelInstall Structure</td>
-                  <td>{result?.panelInstallStructure1}</td>
-                  <td>{result?.panelInstallStructureP}</td>
-                  <td>{result?.panelInstallStructureST}</td>
-                  <td>{result?.panelInstallStructureG}</td>
-                  <td className="text-xl font-bold text-green-600">
-                    {result?.panelInstallStructureGT}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            }
+                </thead>
+                <tbody>
+                  {/* Render panelInstallStructure data */}
+                  {result.panelInstallStructure.map((item, i) => (
+                    <tr key={i}>
+                      <td>PanelInstall Structure</td>
+                      <td>{item.panelInstallStructure1}</td>
+                      <td>{item.panelInstallStructureP}</td>
+                      <td>{item.panelInstallStructureST}</td>
+                      <td>{item.panelInstallStructureG}</td>
+                      <td className="text-xl font-bold text-green-600">
+                        {item.panelInstallStructureGT}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tbody>
+                  <tr>
+                    <td>Total</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td className="text-xl font-bold text-green-600">
+                      {result.panelInstallStructureTotal}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            ) : (
+              <table className="w-full mb-4 text-sm">
+                <thead className="bg-[#F5F5F5]">
+                  <tr className="text-base">
+                    <th className="text-left">Name</th>
+                    <th className="text-left">Watts</th>
+                    <th className="text-left">Quantity(Panel)</th>
+                    <th className="text-left">Total Watt</th>
+                    <th className="text-left">Price Per watt</th>
+                    <th className="text-left">Total</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>PanelInstall Structure</td>
+                    <td>{result?.panelInstallStructure1}</td>
+                    <td>{result?.panelInstallStructureP}</td>
+                    <td>{result?.panelInstallStructureST}</td>
+                    <td>{result?.panelInstallStructureG}</td>
+                    <td className="text-xl font-bold text-green-600">
+                      {result?.panelInstallStructureGT}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
             <table className="w-full mb-4 text-sm">
               <thead className="bg-[#F5F5F5]">
                 <tr className="text-base">
@@ -345,8 +314,6 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   return (
     <div>
       {newBillPopup && (
-
-
         // <CreateBillPopup
         //   fetchData={fetchData}
         //   onClose={onClosePopup}
