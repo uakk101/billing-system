@@ -144,7 +144,7 @@ export const ViewBill = () => {
       <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
         <div className="flex items-center justify-between gap-6">
           <div>
-            <div className="bg-[#F0F5FB] rounded-lg border items-center w-96 outline-none flex py-2 px-3">
+            <div className="bg-[#F0F5FB] rounded-lg border items-center w-64 outline-none flex py-2 px-3">
               <BiSearch className="w-6 h-6 text-[#007495]" />
               <input
                 type="text"
@@ -157,7 +157,7 @@ export const ViewBill = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            <div className="bg-[#F0F5FB] rounded-lg border items-center w-96 outline-none flex py-2 px-3">
+            <div className="bg-[#F0F5FB] rounded-lg border items-center w-64 outline-none flex py-2 px-3">
               <BiSearch className="w-6 h-6 text-[#007495]" />
               <input
                 type="text"
@@ -168,9 +168,10 @@ export const ViewBill = () => {
                 placeholder="Technician Name"
               />
             </div>
-            <h1 className="text-red-700" htmlFor="">
+            <div className="flex items-center gap-2">
+            <label className="text-red-700" htmlFor="">
               start date
-            </h1>
+            </label>
             <input
               className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
               type="date"
@@ -178,7 +179,9 @@ export const ViewBill = () => {
               value={searchQuery.startDate}
               onChange={handleSearchChange}
             />
+            </div>
 
+            <div className="flex items-center gap-2">
             <label htmlFor="" className="text-red-700">
               end date
             </label>
@@ -189,6 +192,7 @@ export const ViewBill = () => {
               value={searchQuery.endDate}
               onChange={handleSearchChange}
             />
+            </div>
           </div>
           <div className="flex gap-2 item">
             <CustomButton
