@@ -639,6 +639,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
         // Calculate the T values
         const updatedLocationModel = {
           ...locationModel,
+          Rate: Number(locationModel.Rate).toFixed(2),
           mughalGarderQ: Number(locationModel.mughalGarderQ).toFixed(2),
           mughalGarderP: Number(locationModel.mughalGarderP).toFixed(2),
           mughalGarderT: String(
@@ -685,6 +686,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               Number(locationModel.nutBoltQ) * Number(locationModel.nutBoltP)
             ).toFixed(2)
           ),
+
           cutterDiskQ: Number(locationModel.cutterDiskQ).toFixed(2),
           cutterDiskP: Number(locationModel.cutterDiskP).toFixed(2),
           cutterDiskT: String(
@@ -752,6 +754,22 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)
             ).toFixed(2)
           ),
+          
+          L3Q: Number(locationModel.topPlateQ).toFixed(2),
+          L3P: Number(locationModel.topPlateP).toFixed(2),
+          L3T: String(
+            (
+              Number(locationModel.L3Q) * Number(locationModel.L3P)
+            ).toFixed(2)
+          ),
+          cChannel1Q: Number(locationModel.topPlateQ).toFixed(2),
+          cChannel1P: Number(locationModel.topPlateP).toFixed(2),
+          cChannel1T: String(
+            (
+              Number(locationModel.cChannel1Q) * Number(locationModel.cChannel1P)
+            ).toFixed(2)
+          ),
+
           panelInstallStructure: locationModel.panelInstallStructure.map(
             (item) => ({
               ...item,
