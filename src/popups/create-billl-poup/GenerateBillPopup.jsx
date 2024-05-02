@@ -599,6 +599,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
       newState["companyName"] = "";
       newState["otherExpenses"] = "";
       newState["reason"] = "";
+      newState["Rate"] = "";
 
       // Clear panelInstallStructure array
       newState["panelInstallStructure"] = [

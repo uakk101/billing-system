@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import CustomButton from "../common/CustomButton";
-import CreateBillPopup from "../popups/create-billl-poup/CreateBillPopup";
+ 
 import axios from "axios";
 import { ViewBillGrid } from "./ViewBillGrid";
 import { toast } from "react-toastify";
@@ -17,10 +17,11 @@ export const ViewBill = () => {
 
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const [isLoading, setIsLoading] = useState(false); 
   const [profit, setProfit] = useState({
     totalAmount: 0,
-    totalPanelStructureGT: 0,
+    totalPanelStructureTotal: 0,
+    totalRateTimesST : 0,
   });
 
   const handleSearchChange = (e) => {
@@ -66,7 +67,8 @@ export const ViewBill = () => {
             setSearchResults(data.data);
             setProfit({
               totalAmount: data.totalAmount,
-              totalPanelStructureGT: data.totalPanelStructureGT,
+              totalPanelStructureTotal: data.totalPanelStructureTotal,
+              totalRateTimesST: data.totalRateTimesST,
             });
 
           } else {
@@ -83,7 +85,7 @@ export const ViewBill = () => {
   };
 
 
-  const onClosePopup = (e, isSaved) => {
+  const onClosePopup = () => {
     setNewBillPopup(false);
   };
 
@@ -95,7 +97,8 @@ export const ViewBill = () => {
     setIsLoading(true); // Set loading state
     setProfit({
       totalAmount: 0,
-      totalPanelStructureGT: 0,
+      totalPanelStructureTotal: 0,
+      totalRateTimesST: 0,
     })
     try {
       const response = await axios.get(
