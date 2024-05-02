@@ -332,6 +332,12 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
         />
       )}
       <div className="flex justify-end gap-4 mr-8">
+      <h1 className="text-xl font-bold">
+          Total Bills Displayed:
+          <span className="text-xl font-bold text-red-700">
+            {searchResults?.length || 0}  {/* Total count of bills */}
+          </span>
+        </h1>
         <h1 className="text-xl font-bold">
           Total Technician Payment :
           <span className="text-xl font-bold text-red-700">
