@@ -63,14 +63,14 @@ function App() {
 
   return (
     <>
-      {/* <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss 
+        pauseOnFocusLoss
         draggable
         pauseOnHover
         theme="light"
@@ -85,8 +85,8 @@ function App() {
         </Router>
       ) : (
         <LoginPage handleLogin={handleLogin} />
-      )} */}
-      <h1></h1>
+      )}
+
     </>
   );
 }
