@@ -85,8 +85,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
   const renderGrid = () => {
     if (!searchResults) return null;
     const sortedResults = searchResults
-      .slice()
-      .sort((a, b) => a.billNo - b.billNo);
+    // .slice()
+    // .sort((a, b) => a.billNo - b.billNo);
 
     return sortedResults.map((result, index) => (
       <div
@@ -153,9 +153,8 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
         </div>
         {activeAccordion === index ? (
           <div
-            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${
-              activeAccordion === index ? " h-[475px]" : ""
-            }`}
+            className={`relative mt-2 overflow-y-auto h-0 transition-all duration-500 ${activeAccordion === index ? " h-[475px]" : ""
+              }`}
           >
             <table className="w-full text-sm">
               <thead className="bg-[#F5F5F5] w-full">
@@ -216,7 +215,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
             </table>
 
             {result.panelInstallStructure &&
-            result.panelInstallStructure.length > 0 ? (
+              result.panelInstallStructure.length > 0 ? (
               <table className="w-full mb-4 text-sm">
                 <thead className="bg-[#F5F5F5]">
                   <tr className="text-base">
@@ -332,7 +331,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
         />
       )}
       <div className="flex justify-end gap-4 mr-8">
-      <h1 className="text-xl font-bold">
+        <h1 className="text-xl font-bold">
           Total Bills Displayed:
           <span className="text-xl font-bold text-red-700">
             {searchResults?.length || 0}  {/* Total count of bills */}
