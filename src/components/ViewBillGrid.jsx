@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import GenerateBillPopup from "../popups/create-billl-poup/GenerateBillPopup";
 
-export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
+export const ViewBillGrid = ({ searchResults, fetchData, profit, startData }) => {
   const [activeAccordion, setActiveAccordion] = useState(false);
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [newDeletePopup, setDeletePopup] = useState(false);
@@ -84,9 +84,7 @@ export const ViewBillGrid = ({ searchResults, fetchData, profit }) => {
 
   const renderGrid = () => {
     if (!searchResults) return null;
-    const sortedResults = searchResults
-    // .slice()
-    // .sort((a, b) => a.billNo - b.billNo);
+    const sortedResults = searchResults.length === 0 ? startData : searchResults.slice().sort((a, b) => a.billNo - b.billNo);
 
     return sortedResults.map((result, index) => (
       <div

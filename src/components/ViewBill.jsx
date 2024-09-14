@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import CustomButton from "../common/CustomButton";
- 
+
 import axios from "axios";
 import { ViewBillGrid } from "./ViewBillGrid";
 import { toast } from "react-toastify";
@@ -17,11 +17,12 @@ export const ViewBill = () => {
 
   const [newBillPopup, setNewBillPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); 
+  const [startData, setStartData] = useState([])
+  const [isLoading, setIsLoading] = useState(false);
   const [profit, setProfit] = useState({
     totalAmount: 0,
     totalPanelStructureTotal: 0,
-    totalRateTimesST : 0,
+    totalRateTimesST: 0,
   });
 
   const handleSearchChange = (e) => {
@@ -42,7 +43,7 @@ export const ViewBill = () => {
     const isEndDateMissing = startDate && !endDate;
 
     if (isEmptySearch) {
-      // If all search fields are empty, fetch all data
+      setSearchResults([])
 
       fetchData();
     } else if (isStartDateMissing) {
@@ -106,7 +107,7 @@ export const ViewBill = () => {
       );
       const data = response.data;
       if (data.success) {
-        setSearchResults(data.data);
+        setStartData(data.data);
       } else {
         console.error("Error retrieving all data:", data.message);
       }
@@ -169,29 +170,29 @@ export const ViewBill = () => {
               />
             </div>
             <div className="flex items-center gap-2">
-            <label className="text-red-700" htmlFor="">
-              start date
-            </label>
-            <input
-              className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
-              type="date"
-              name="startDate"
-              value={searchQuery.startDate}
-              onChange={handleSearchChange}
-            />
+              <label className="text-red-700" htmlFor="">
+                start date
+              </label>
+              <input
+                className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
+                type="date"
+                name="startDate"
+                value={searchQuery.startDate}
+                onChange={handleSearchChange}
+              />
             </div>
 
             <div className="flex items-center gap-2">
-            <label htmlFor="" className="text-red-700">
-              end date
-            </label>
-            <input
-              className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
-              type="date"
-              name="endDate"
-              value={searchQuery.endDate}
-              onChange={handleSearchChange}
-            />
+              <label htmlFor="" className="text-red-700">
+                end date
+              </label>
+              <input
+                className="bg-[#F0F5FB] rounded-lg border items-center outline-none flex py-2 px-3"
+                type="date"
+                name="endDate"
+                value={searchQuery.endDate}
+                onChange={handleSearchChange}
+              />
             </div>
           </div>
           <div className="flex gap-2 item">
@@ -213,6 +214,7 @@ export const ViewBill = () => {
       <ViewBillGrid
         fetchData={fetchData}
         searchResults={searchResults}
+        startData={startData}
         profit={profit}
       />
     </div>
