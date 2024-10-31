@@ -672,7 +672,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               Number(locationModel.basePlateP)
             ).toFixed(2)
           ),
-          rawalBoltQ: Number(locationModel.rawalBoltP).toFixed(2),
+          rawalBoltQ: Number(locationModel.rawalBoltQ).toFixed(2),
           rawalBoltP: Number(locationModel.rawalBoltP).toFixed(2),
           rawalBoltT: String(
             (

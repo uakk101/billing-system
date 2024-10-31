@@ -396,8 +396,10 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
 
   const onAddBill = async (flag) => {
     let my_validation = setValidation();
+    debugger
+     
     if (my_validation) {
-
+      
     } else {
       try {
         // Calculate the T values
@@ -434,7 +436,7 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
               Number(locationModel.basePlateP)
             ).toFixed(2)
           ),
-          rawalBoltQ: Number(locationModel.rawalBoltP).toFixed(2),
+          rawalBoltQ: Number(locationModel.rawalBoltQ).toFixed(2),
           rawalBoltP: Number(locationModel.rawalBoltP).toFixed(2),
           rawalBoltT: String(
             (
@@ -550,10 +552,11 @@ const CreateBillPopup = ({ onClose, billID, fetchData }) => {
             }, 0)
             .toFixed(2),
         };
-
+       
         const payload = {
           locationModel: updatedLocationModel,
         };
+       
 
         // setLoading(true);
         const response = await axios.post(
