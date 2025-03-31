@@ -624,17 +624,17 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
       try {
         const panelInstallStructureTotal = locationModel.panelInstallStructure
           ? (
-              locationModel.panelInstallStructure
-                .map((item) =>
-                  parseFloat(
-                    item.panelInstallStructure1 *
-                      item.panelInstallStructureP *
-                      item.panelInstallStructureG
-                  )
+            locationModel.panelInstallStructure
+              .map((item) =>
+                parseFloat(
+                  item.panelInstallStructure1 *
+                  item.panelInstallStructureP *
+                  item.panelInstallStructureG
                 )
-                .reduce((total, calculation) => total + calculation, 0) +
-              parseFloat(locationModel.otherExpenses || 0)
-            ).toFixed(2)
+              )
+              .reduce((total, calculation) => total + calculation, 0) +
+            parseFloat(locationModel.otherExpenses || 0)
+          ).toFixed(2)
           : "0.00";
 
         // Calculate the T values
@@ -755,16 +755,16 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               Number(locationModel.topPlateQ) * Number(locationModel.topPlateP)
             ).toFixed(2)
           ),
-          
-          L3Q: Number(locationModel.topPlateQ).toFixed(2),
-          L3P: Number(locationModel.topPlateP).toFixed(2),
+
+          L3Q: Number(locationModel.L3Q).toFixed(2),
+          L3P: Number(locationModel.L3P).toFixed(2),
           L3T: String(
             (
               Number(locationModel.L3Q) * Number(locationModel.L3P)
             ).toFixed(2)
           ),
-          cChannel1Q: Number(locationModel.topPlateQ).toFixed(2),
-          cChannel1P: Number(locationModel.topPlateP).toFixed(2),
+          cChannel1Q: Number(locationModel.cChannel1Q).toFixed(2),
+          cChannel1P: Number(locationModel.cChannel1P).toFixed(2),
           cChannel1T: String(
             (
               Number(locationModel.cChannel1Q) * Number(locationModel.cChannel1P)
@@ -788,29 +788,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
 
           panelInstallStructureTotal: panelInstallStructureTotal,
 
-          //     item.panelInstallStructure1 =  Number(
-          //         item.panelInstallStructure1
-          //     ).toFixed(2),
-          //     panelInstallStructureP: Number(
-          //         locationModel.panelInstallStructureP
-          //     ).toFixed(2),
-          //     panelInstallStructureG: Number(
-          //         locationModel.panelInstallStructureG
-          //     ).toFixed(2),
-          //     panelInstallStructureST: String(
-          //         (
-          //             Number(locationModel.panelInstallStructure1) *
-          //             Number(locationModel.panelInstallStructureP)
-          //         ).toFixed(2)
-          //     ),
-          //     panelInstallStructureGT: String(
-          //         (
-          //             Number(locationModel.panelInstallStructure1) *
-          //             Number(locationModel.panelInstallStructureP) *
-          //             Number(locationModel.panelInstallStructureG)
-          //         ).toFixed(2)
-          //     ),
-          // })),
+
 
           total: Object.keys(locationModel)
             .filter((k) => !k.endsWith("Q"))
@@ -1105,7 +1083,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                     <h1 className="mt-2 text-end">
                       {Number(
                         locationModel.mughalGarderQ *
-                          locationModel.mughalGarderP
+                        locationModel.mughalGarderP
                       ).toFixed(2)}
                     </h1>
                   </div>
@@ -1818,7 +1796,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                       <h1 className="mt-2 text-end">
                         {Number(
                           item.panelInstallStructure1 *
-                            item.panelInstallStructureP
+                          item.panelInstallStructureP
                         ).toFixed(2)}
                       </h1>
                     </div>
@@ -1836,11 +1814,11 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                       <h1 className="mt-2 text-2xl text-green-700 text-end ">
                         {Number(
                           item.panelInstallStructure1 *
-                            item.panelInstallStructureP *
-                            item.panelInstallStructureG +
-                            (item.otherExpenses
-                              ? parseFloat(item.otherExpenses)
-                              : 0)
+                          item.panelInstallStructureP *
+                          item.panelInstallStructureG +
+                          (item.otherExpenses
+                            ? parseFloat(item.otherExpenses)
+                            : 0)
                         ).toFixed(2)}
                       </h1>
                     </div>
@@ -1870,8 +1848,8 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                           .map((item) =>
                             parseFloat(
                               item.panelInstallStructure1 *
-                                item.panelInstallStructureP *
-                                item.panelInstallStructureG
+                              item.panelInstallStructureP *
+                              item.panelInstallStructureG
                             )
                           )
                           .reduce(
