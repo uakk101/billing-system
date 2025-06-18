@@ -130,7 +130,7 @@ export const ViewBill = () => {
     } catch (error) {
       console.error("Error retrieving all data:", error);
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);  
     }
   };
   useEffect(() => {
