@@ -25,6 +25,22 @@ export const ViewBill = () => {
     totalRateTimesST: 0,
   });
 
+  // Effect to disable body scroll when popup is open
+  useEffect(() => {
+    if (newBillPopup) {
+      // Disable scrolling on body
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Re-enable scrolling on body
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup function to re-enable scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [newBillPopup]);
+
   const handleSearchChange = (e) => {
     const { name, value } = e.target;
     setSearchQuery((prev) => ({
@@ -125,7 +141,7 @@ export const ViewBill = () => {
   return (
     <div>
       {isLoading && (
-        <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-200 bg-opacity-50">
+        <div className="flex fixed top-0 left-0 justify-center items-center w-full h-full bg-gray-200 bg-opacity-50">
           <p className="text-lg font-semibold">Loading...</p>
         </div>
       )}
@@ -142,8 +158,8 @@ export const ViewBill = () => {
         />
 
       )}
-      <div className="flex justify-center p-2 m-8 border border-gray-400 rounded-md shadow-md">
-        <div className="flex items-center justify-between gap-6">
+      <div className="flex justify-center p-2 m-8 rounded-md border border-gray-400 shadow-md">
+        <div className="flex gap-6 justify-between items-center">
           <div>
             <div className="bg-[#F0F5FB] rounded-lg border items-center w-64 outline-none flex py-2 px-3">
               <BiSearch className="w-6 h-6 text-[#007495]" />
@@ -169,7 +185,7 @@ export const ViewBill = () => {
                 placeholder="Technician Name"
               />
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex gap-2 items-center">
               <label className="text-red-700" htmlFor="">
                 start date
               </label>
@@ -182,7 +198,7 @@ export const ViewBill = () => {
               />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex gap-2 items-center">
               <label htmlFor="" className="text-red-700">
                 end date
               </label>
