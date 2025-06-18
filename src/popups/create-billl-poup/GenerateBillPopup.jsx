@@ -121,6 +121,17 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
     panelInstallStructureTotal: "",
   });
 
+  // Effect to disable body scroll when popup is mounted
+  useEffect(() => {
+    // Disable scrolling on body when popup opens
+    document.body.style.overflow = 'hidden';
+
+    // Cleanup function to re-enable scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   // const [loading, setLoading] = useState(false);
 
   const onhandleChange = (e, index) => {
@@ -921,13 +932,13 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
       role="dialog"
       data-te-open="true"
     >
-      <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
       <div
         data-te-modal-dialog-ref
         className="pointer-events-none flex items-center relative h-[calc(100%-1rem)] w-auto translate-y-[-50px] transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-2 min-[576px]:max-w-[500px] min-[992px]:max-w-[800px] min-[1200px]:max-w-[1140px] transform-none opacity-100"
       >
         <div className="pointer-events-auto p-5 relative flex justify-between max-h-[100%] w-full flex-col overflow-hidden rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
-          <div className="flex items-center justify-between pb-3 text-2xl font-semibold border-b">
+          <div className="flex justify-between items-center pb-3 text-2xl font-semibold border-b">
             {billID ? "Update Bill" : "Add Bill"}
             <div className="">
               <CustomInput
@@ -945,7 +956,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               onClick={onClose}
               className="p-1.5 shrink-0 rounded border border-slate-200 hover:border-slate-300 shadow-sm ml-2"
             >
-              <GrClose className="text-indigo-500 " />
+              <GrClose className="text-indigo-500" />
             </button>
           </div>
 
@@ -962,7 +973,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               />
               {validationModel.companyNameError}
             </div>
-            <div className="col-span-3 md:col-span-2 ">
+            <div className="col-span-3 md:col-span-2">
               <CustomInput
                 name={"technition"}
                 value={locationModel.technition}
@@ -974,7 +985,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               />
               {validationModel.technitionError}
             </div>
-            <div className="col-span-3 md:col-span-2 ">
+            <div className="col-span-3 md:col-span-2">
               <CustomInput
                 name={"Rate"}
                 value={locationModel.Rate}
@@ -987,7 +998,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               {validationModel.RateError}
             </div>
 
-            <div className="col-span-6 md:col-span-3 ">
+            <div className="col-span-6 md:col-span-3">
               <CustomInput
                 name={"customerName"}
                 value={locationModel.customerName}
@@ -999,7 +1010,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               />
               {validationModel.technitionError}
             </div>
-            <div className="col-span-6 md:col-span-2 ">
+            <div className="col-span-6 md:col-span-2">
               <CustomInput
                 name={"date"}
                 value={locationModel.date}
@@ -1010,7 +1021,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               />
               {validationModel.dateError}
             </div>
-            <div className="col-span-12 md:col-span-12 ">
+            <div className="col-span-12 md:col-span-12">
               <CustomInput
                 name={"address"}
                 value={locationModel.address}
@@ -1023,9 +1034,9 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
               {validationModel.addressError}
             </div>
           </div>
-          <div className="relative overflow-y-auto">
-            <div className="relative max-w-6xl overflow-hidden text-left transition-all transform bg-white rounded-lg sm:my-8 sm:w-full">
-              <div className="bg-white ">
+          <div className="overflow-y-auto relative">
+            <div className="overflow-hidden relative max-w-6xl text-left bg-white rounded-lg transition-all transform sm:my-8 sm:w-full">
+              <div className="bg-white">
                 {/* 
                  <div  className='rtl-container'> */}
                 <div className="grid grid-cols-12 gap-4 px-4">
@@ -1811,7 +1822,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
                       {validationModel.panelInstallStructureGError}
                     </div>
                     <div className="col-span-12 md:col-span-2">
-                      <h1 className="mt-2 text-2xl text-green-700 text-end ">
+                      <h1 className="mt-2 text-2xl text-green-700 text-end">
                         {Number(
                           item.panelInstallStructure1 *
                           item.panelInstallStructureP *
@@ -1891,7 +1902,7 @@ const GenerateBillPopup = ({ onClose, billID, fetchData }) => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-end flex-shrink-0 gap-2 py-2">
+          <div className="flex flex-wrap flex-shrink-0 gap-2 justify-end items-center py-2">
             {/* <div className="flex justify-end px-4 py-4 border-t-2"> */}
             <CustomButton
               type={"primary"}
